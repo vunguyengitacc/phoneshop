@@ -10,6 +10,12 @@
 <meta charset="UTF-8">
 
 <title>Home Page</title>
+<c:set var="root" value="${pageContext.request.contextPath}"/>
+<link id="callCss" rel="stylesheet"
+	href="<c:url value="/template/NguyenHoangAnhVu/themes/bootshop/bootstrap.min.css"/>"
+	media="screen" />
+<link href="<c:url value="/template/NguyenHoangAnhVu/themes/css/base.css"/>"
+	rel="stylesheet" media="screen" />
 </head>
 
 <body>
@@ -24,7 +30,7 @@
 	<c:if test="${empty lst }">
 		<h1>Không tìm thấy tài khoản</h1>
 	</c:if>
-
+	<button class="btn-primary">Check</button>
 
 
 </body>
