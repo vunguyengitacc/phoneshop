@@ -1,5 +1,5 @@
 package javaweb.Entity;
-// Generated Apr 11, 2021, 1:55:39 PM by Hibernate Tools 5.1.10.Final
+// Generated Apr 27, 2021, 11:12:42 AM by Hibernate Tools 5.1.10.Final
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -7,8 +7,6 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -20,7 +18,11 @@ import javax.persistence.Table;
 @Table(name = "promotion", catalog = "mydb")
 public class Promotion implements java.io.Serializable {
 
-	private Integer id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int id;
 	private BigDecimal value;
 	private byte expired;
 	private Set<Bill> bills = new HashSet<Bill>(0);
@@ -28,26 +30,27 @@ public class Promotion implements java.io.Serializable {
 	public Promotion() {
 	}
 
-	public Promotion(BigDecimal value, byte expired) {
+	public Promotion(int id, BigDecimal value, byte expired) {
+		this.id = id;
 		this.value = value;
 		this.expired = expired;
 	}
 
-	public Promotion(BigDecimal value, byte expired, Set<Bill> bills) {
+	public Promotion(int id, BigDecimal value, byte expired, Set<Bill> bills) {
+		this.id = id;
 		this.value = value;
 		this.expired = expired;
 		this.bills = bills;
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "ID", unique = true, nullable = false)
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

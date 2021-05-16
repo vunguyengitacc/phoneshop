@@ -22,6 +22,9 @@
 	
 	<mvc:resources mapping="/template/**"
 		location="WEB-INF/template/" cache-period="31556926" />
+	<mvc:resources mapping="/resources/**"
+		location="WEB-INF/resources/" cache-period="31556926" />		
+		
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 

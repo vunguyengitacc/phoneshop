@@ -1,13 +1,11 @@
 package javaweb.Entity;
-// Generated Apr 11, 2021, 1:55:39 PM by Hibernate Tools 5.1.10.Final
+// Generated Apr 27, 2021, 11:12:42 AM by Hibernate Tools 5.1.10.Final
 
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,7 +19,11 @@ import javax.persistence.Table;
 @Table(name = "ward", catalog = "mydb")
 public class Ward implements java.io.Serializable {
 
-	private Integer id;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int id;
 	private District district;
 	private String name;
 	private Set<Commune> communes = new HashSet<Commune>(0);
@@ -29,26 +31,27 @@ public class Ward implements java.io.Serializable {
 	public Ward() {
 	}
 
-	public Ward(District district, String name) {
+	public Ward(int id, District district, String name) {
+		this.id = id;
 		this.district = district;
 		this.name = name;
 	}
 
-	public Ward(District district, String name, Set<Commune> communes) {
+	public Ward(int id, District district, String name, Set<Commune> communes) {
+		this.id = id;
 		this.district = district;
 		this.name = name;
 		this.communes = communes;
 	}
 
 	@Id
-	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "ID", unique = true, nullable = false)
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

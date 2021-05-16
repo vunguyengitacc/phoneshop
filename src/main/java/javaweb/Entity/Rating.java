@@ -1,5 +1,5 @@
 package javaweb.Entity;
-// Generated Apr 11, 2021, 1:55:39 PM by Hibernate Tools 5.1.10.Final
+// Generated Apr 27, 2021, 11:12:42 AM by Hibernate Tools 5.1.10.Final
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
@@ -18,6 +18,10 @@ import javax.persistence.Table;
 @Table(name = "rating", catalog = "mydb")
 public class Rating implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private RatingId id;
 	private Account account;
 	private Product product;
@@ -46,7 +50,7 @@ public class Rating implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ACCOUNT_USERNAME", nullable = false, insertable = false, updatable = false)
 	public Account getAccount() {
 		return this.account;
@@ -56,7 +60,7 @@ public class Rating implements java.io.Serializable {
 		this.account = account;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PRODUCT_ID", nullable = false, insertable = false, updatable = false)
 	public Product getProduct() {
 		return this.product;

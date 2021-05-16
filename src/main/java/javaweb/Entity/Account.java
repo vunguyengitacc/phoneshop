@@ -1,8 +1,9 @@
 package javaweb.Entity;
-// Generated Apr 11, 2021, 1:55:39 PM by Hibernate Tools 5.1.10.Final
+// Generated Apr 27, 2021, 11:12:42 AM by Hibernate Tools 5.1.10.Final
 
 import java.util.HashSet;
 import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,12 +18,15 @@ import javax.persistence.Table;
 @Table(name = "account", catalog = "mydb")
 public class Account implements java.io.Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String username;
 	private String password;
 	private String email;
 	private String phone;
 	private int type;
 	private byte status;
+	private String name;
+	private int gender;
 	private Set<Rating> ratings = new HashSet<Rating>(0);
 	private Set<Comment> comments = new HashSet<Comment>(0);
 	private Set<Bill> bills = new HashSet<Bill>(0);
@@ -38,14 +42,16 @@ public class Account implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public Account(String username, String password, String email, String phone, int type, byte status,
-			Set<Rating> ratings, Set<Comment> comments, Set<Bill> bills) {
+	public Account(String username, String password, String email, String phone, int type, byte status, String name,
+			Byte gender, Set<Rating> ratings, Set<Comment> comments, Set<Bill> bills) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
 		this.phone = phone;
 		this.type = type;
 		this.status = status;
+		this.name = name;
+		this.gender = gender;
 		this.ratings = ratings;
 		this.comments = comments;
 		this.bills = bills;
@@ -105,6 +111,24 @@ public class Account implements java.io.Serializable {
 
 	public void setStatus(byte status) {
 		this.status = status;
+	}
+
+	@Column(name = "NAME", length = 100)
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Column(name = "GENDER")
+	public int getGender() {
+		return this.gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
