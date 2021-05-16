@@ -24,7 +24,7 @@ public class AdminController {
 		if(userSS.getAccInfor().getType()!=1)
 			return "redirect:/trang-chu/";
 		model.addAttribute("lstAccount", acc.getAll());
-		return "Admin/main";
+		return "Admin/";
 	}
 	
 	@GetMapping("/log-out")
