@@ -1,9 +1,14 @@
 package javaweb.Entity;
-// Generated Apr 11, 2021, 1:55:39 PM by Hibernate Tools 5.1.10.Final
+// Generated Apr 27, 2021, 11:12:42 AM by Hibernate Tools 5.1.10.Final
+
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -13,8 +18,13 @@ import javax.persistence.Table;
 @Table(name = "trademark", catalog = "mydb")
 public class Trademark implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
+	private Set<Product> products = new HashSet<Product>(0);
 
 	public Trademark() {
 	}
@@ -24,8 +34,14 @@ public class Trademark implements java.io.Serializable {
 		this.name = name;
 	}
 
+	public Trademark(int id, String name, Set<Product> products) {
+		this.id = id;
+		this.name = name;
+		this.products = products;
+	}
+
 	@Id
-	
+
 	@Column(name = "ID", unique = true, nullable = false)
 	public int getId() {
 		return this.id;
@@ -42,6 +58,15 @@ public class Trademark implements java.io.Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "trademark")
+	public Set<Product> getProducts() {
+		return this.products;
+	}
+
+	public void setProducts(Set<Product> products) {
+		this.products = products;
 	}
 
 }
