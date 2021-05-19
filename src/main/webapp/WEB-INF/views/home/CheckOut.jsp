@@ -106,17 +106,6 @@
 		</div>
 		<div class="nav-item">
 			<div class="container">
-				<div class="nav-depart">
-					<div class="depart-btn">
-						<i class="ti-menu"></i> <span>Thương hiệu</span>
-						<ul class="depart-hover">
-							<c:forEach var="item" items="${lstTradeMark }">
-								<li><a
-									href="/Web/trang-chu/san-pham?trang=1&thuongHieu=${item.name }&timKiem=">${item.name }</a></li>
-							</c:forEach>
-						</ul>
-					</div>
-				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
 						<li class="active"><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
@@ -136,8 +125,9 @@
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="breadcrumb-text product-more">
-						<a href="/Web/trang-chu/"><i class="fa fa-home"></i> Trang chủ</a> <a
-							href="/Web/trang-chu/gio-hang">Giỏ hàng</a> <span>Trang thanh toán</span>
+						<a href="/Web/trang-chu/"><i class="fa fa-home"></i> Trang chủ</a>
+						<a href="/Web/trang-chu/gio-hang">Giỏ hàng</a> <span>Trang
+							thanh toán</span>
 					</div>
 				</div>
 			</div>
@@ -148,11 +138,13 @@
 	<!-- Shopping Cart Section Begin -->
 	<section class="checkout-section spad">
 		<div class="container">
-			<form action="#" class="checkout-form">
+			<form action="/Web/trang-chu/gio-hang/thanh-toan/ket-qua"
+				class="checkout-form">
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="checkout-content">
-							<a href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=" class="content-btn">Tiếp tục mua sắm</a>
+							<a href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem="
+								class="content-btn">Tiếp tục mua sắm</a>
 						</div>
 						<h4>Thông tin hoá đơn</h4>
 						<div class="row">
@@ -163,15 +155,18 @@
 
 							<div class="col-lg-12">
 								<label for="cun-name">Tên</label> <input type="text"
-									id="cun-name" value="${sessionScope.UserSession.accInfor.name }">
+									id="cun-name"
+									value="${sessionScope.UserSession.accInfor.name }">
 							</div>
 							<div class="col-lg-6">
 								<label for="email">Email Address<span>*</span></label> <input
-									type="text" id="email" value="${sessionScope.UserSession.accInfor.email }">
+									type="text" id="email"
+									value="${sessionScope.UserSession.accInfor.email }">
 							</div>
 							<div class="col-lg-6">
 								<label for="phone">Phone<span>*</span></label> <input
-									type="text" id="phone" value="${sessionScope.UserSession.accInfor.email }">
+									type="text" id="phone"
+									value="${sessionScope.UserSession.accInfor.email }">
 							</div>
 
 							<div class="col-lg-12 mt-3">
@@ -217,7 +212,9 @@
 								<ul class="order-table">
 									<li>Sản phẩm <span>Thành tiền</span></li>
 									<c:forEach var="item" items="${sessionScope.cart.lstItem }">
-										<li class="fw-normal">${item.pro.name } - ${item.color.name } x ${item.amount } <span>${item.value }</span></li>
+										<li class="fw-normal">${item.pro.name }-
+											${item.color.name } x ${item.amount } <span>${item.value }</span>
+										</li>
 									</c:forEach>
 									<li class="total-price">Total <span>${sessionScope.cart.totalValue }</span></li>
 								</ul>
@@ -226,14 +223,43 @@
 					</div>
 					<div class="col-lg-12">
 						<div class="checkout-content">
-							<button type="submit" class="site-btn place-btn mt-4"
-								style="width: 100%;">XÁC NHẬN MUA HÀNG</button>
+							<c:choose>
+								<c:when test="${sessionScope.cart.lstItem.size()=='0' }">
+									<button type="button" class="site-btn place-btn mt-4 btn-light"
+										style="width: 100%;"  onclick="nullCartHandler()">XÁC NHẬN MUA HÀNG</button>
+								</c:when>
+								<c:otherwise>
+									<button type="submit" class="site-btn place-btn mt-4"
+										style="width: 100%;">XÁC NHẬN MUA HÀNG</button>
+								</c:otherwise>
+							</c:choose>
+
 						</div>
 					</div>
 				</div>
 			</form>
 		</div>
 	</section>
+
+	<!-- Modal Add Cart	Start-->
+	<div class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		id="modalCart">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="contentForCartAction">...</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Add Cart	End-->
+
 
 	<!-- Footer Section Begin -->
 	<footer class="footer-section">
@@ -300,6 +326,12 @@
 	<script src="<c:url value="/template/Home/js/jquery.slicknav.js"/>"></script>
 	<script src="<c:url value="/template/Home/js/owl.carousel.min.js"/>"></script>
 	<script src="<c:url value="/template/Home/js/main.js"/>"></script>
+	<script type="text/javascript">
+		function nullCartHandler() {
+			$("#contentForCartAction").html("Bạn chưa có vật phẩm nào trong giỏ hàng");
+			$("#modalCart").modal('show');
+		}
+	</script>
 </body>
 
 </html>

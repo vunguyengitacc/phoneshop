@@ -22,7 +22,7 @@ public class LoginController {
 		Account acc = new javaweb.services.imple.Account();
 		userSs.setAccInfor(acc.getByUsernameAndPass(username, password, false));
 		session.setAttribute("UserSession", userSs);
-		session.setMaxInactiveInterval(60*1);
+		session.setMaxInactiveInterval(60*5);
 		return "redirect:/trang-chu/";
 	}
 }

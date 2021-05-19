@@ -106,17 +106,6 @@
 		</div>
 		<div class="nav-item">
 			<div class="container">
-				<div class="nav-depart">
-					<div class="depart-btn">
-						<i class="ti-menu"></i> <span>Thương hiệu</span>
-						<ul class="depart-hover">
-							<c:forEach var="item" items="${lstTradeMark }">
-								<li><a
-									href="/Web/trang-chu/san-pham?trang=1&thuongHieu=${item.name }&timKiem=">${item.name }</a></li>
-							</c:forEach>
-						</ul>
-					</div>
-				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
 						<li class="active"><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
@@ -224,7 +213,7 @@
 									<li class="subtotal">Giá ban đầu <span id="subTotalValue">${sessionScope.cart.totalValue }</span></li>
 									<li class="cart-total">Tổng cộng <span id="totalValue">${sessionScope.cart.totalValue }</span></li>
 								</ul>
-								<a href="#" class="proceed-btn">THANH TOÁN</a>
+								<a href="/Web/trang-chu/gio-hang/thanh-toan" class="proceed-btn">THANH TOÁN</a>
 							</div>
 						</div>
 					</div>
@@ -232,9 +221,29 @@
 			</div>
 		</div>
 	</section>
-
+	
 	<!-- Cart Detail Section End -->
-
+	
+	<!-- Modal Add Cart	Start-->
+	<div class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		id="modalCart">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="contentForCartAction">...</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Add Cart	End-->
+	
+	
 	<!-- Footer Section Begin -->
 	<footer class="footer-section">
 		<div class="container">
@@ -311,8 +320,10 @@
 				type: 'PUT', 
 				success: function(response){
 					var objJson = JSON.parse(response);
-					if(objJson.status == "2")
-						alert("Cập nhật thất bại");
+					if(objJson.status == "2"){
+						$("#contentForCartAction").html("Cập nhật thất bại");
+						$("#modalCart").modal('show');
+					}
 					else{
 						$("#"+t).html(objJson.newItemValue);
 						$("#amountItemCart").html(objJson.totalItem);
@@ -321,8 +332,9 @@
 						$("#totalValue").html(objJson.totalValue);	
 					}
 				},
-				error: function(erorr){
-					alert("Đã xảy ra lỗi");
+				error: function(error){
+					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#modalCart").modal('show');
 				}
 			})
 		}
@@ -332,8 +344,10 @@
 				type: 'DELETE',
 				success: function(response){
 					var objJson = JSON.parse(response);
-					if(objJson.resultDelete == 2)
-						alert("Cập nhật thất bại");
+					if(objJson.resultDelete == 2){
+						$("#contentForCartAction").html("Cập nhật thất bại");
+						$("#modalCart").modal('show');
+					}
 					if(objJson.resultDelete == 1){
 						$("#amountItemCart").html(objJson.totalItem);
 						$("#amountValueCart").html(objJson.totalValue);
@@ -343,7 +357,8 @@
 					}
 				},
 				error: function(error){
-					console.log(error);
+					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#modalCart").modal('show');
 				}
 			})
 		}

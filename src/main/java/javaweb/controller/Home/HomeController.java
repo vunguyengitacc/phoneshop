@@ -24,6 +24,7 @@ import javaweb.services.inter.Bill;
 import javaweb.services.inter.Color;
 import javaweb.services.inter.Comment;
 import javaweb.services.inter.Product;
+import javaweb.services.inter.ProductHasColorHasBill;
 import javaweb.services.inter.Rating;
 import javaweb.services.inter.TradeMark;
 
@@ -45,6 +46,8 @@ public class HomeController {
 	Bill bill;
 	@Autowired
 	Account acc;
+	@Autowired
+	ProductHasColorHasBill pro_bill;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String homePage(Model model, HttpSession session) {
@@ -183,20 +186,34 @@ public class HomeController {
 
 	@GetMapping("gio-hang/thanh-toan/ket-qua")
 	public String resultCheckOut(Model model, HttpSession session, @RequestParam("maDiaChi") int comm,
-			@RequestParam("maGiamGia") int promo) {
+			@RequestParam("maGiamGia") String promo) {
 		UserSession userSs = (UserSession) session.getAttribute("UserSession");
 		Cart lstInSS = (Cart) session.getAttribute("cart");
+		session.setAttribute("cart", new Cart());
 		if (userSs == null)
 			return "redirect:/trang-chu/";
 		if (lstInSS == null || lstInSS.getLstItem().size() == 0) {
 			model.addAttribute("resultCode", 2);// 2: khong ton tai mat hang nao trong gio hang
 			return "home/Result";
 		}
-		if(bill.createBill(acc.getByUsername(userSs.getAccInfor().getUsername(), true), comm, lstInSS.getTotalValue(),
-				promo, lstInSS)==false)
-			model.addAttribute("resultCode", 3);//them that bai
+		int promoCode;
+		if (promo == "")
+			promoCode = 0;
 		else
-			model.addAttribute("resultCode", 1);//them thanh cong
+			promoCode = Integer.parseInt(promo);
+		int idRS = bill.postBill(acc.getByUsername(userSs.getAccInfor().getUsername(), true), comm,
+				lstInSS.getTotalValue(), promoCode);
+		if (idRS == -1) {
+			model.addAttribute("resultCode", 3);// them that bai
+			System.out.println("BUG LỖI");
+		} else {
+			model.addAttribute("resultCode", 1);// them thanh cong
+			//Them chi tiet hoa don
+			lstInSS.getLstItem().forEach((item) -> {
+				if (pro_bill.postNew(item.getColor().getId(), item.getPro().getId(), idRS, item.getAmount()) == false)
+					System.out.println("BUG: Error");
+			});
+		}
 		return "home/Result";
 	}
 }

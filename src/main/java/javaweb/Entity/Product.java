@@ -8,6 +8,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -33,12 +35,12 @@ public class Product implements java.io.Serializable {
 	private BigDecimal promotionPrice;
 	private String image;
 	private String description;
-	private Integer ram;
-	private Integer rom;
+	private int ram;
+	private int rom;
 	private BigDecimal screenSize;
 	private String frontCamera;
 	private String backCamera;
-	private Integer batteryCapacity;
+	private int batteryCapacity;
 	private String os;
 	private String cpu;
 	private String gpu;
@@ -48,6 +50,7 @@ public class Product implements java.io.Serializable {
 	private Set<ProductHasColor> productHasColors = new HashSet<ProductHasColor>(0);
 
 	public Product() {
+		this.trademark = new Trademark();
 	}
 
 	public Product(int id, Trademark trademark, String name, BigDecimal originalPrice, BigDecimal price,
@@ -61,8 +64,8 @@ public class Product implements java.io.Serializable {
 	}
 
 	public Product(int id, Trademark trademark, String name, BigDecimal originalPrice, BigDecimal price,
-			BigDecimal promotionPrice, String image, String description, Integer ram, Integer rom,
-			BigDecimal screenSize, String frontCamera, String backCamera, Integer batteryCapacity, String os,
+			BigDecimal promotionPrice, String image, String description, int ram, int rom,
+			BigDecimal screenSize, String frontCamera, String backCamera, int batteryCapacity, String os,
 			String cpu, String gpu, String sim, Set<Comment> comments, Set<Rating> ratings,
 			Set<ProductHasColor> productHasColors) {
 		this.id = id;
@@ -89,8 +92,8 @@ public class Product implements java.io.Serializable {
 	}
 
 	@Id
-
-	@Column(name = "ID", unique = true, nullable = false)
+	@GeneratedValue(strategy =  GenerationType.IDENTITY)
+	@Column(name = "ID", unique = true, nullable = true, insertable = false)
 	public int getId() {
 		return this.id;
 	}
@@ -164,20 +167,20 @@ public class Product implements java.io.Serializable {
 	}
 
 	@Column(name = "RAM")
-	public Integer getRam() {
+	public int getRam() {
 		return this.ram;
 	}
 
-	public void setRam(Integer ram) {
+	public void setRam(int ram) {
 		this.ram = ram;
 	}
 
 	@Column(name = "ROM")
-	public Integer getRom() {
+	public int getRom() {
 		return this.rom;
 	}
 
-	public void setRom(Integer rom) {
+	public void setRom(int rom) {
 		this.rom = rom;
 	}
 
@@ -209,11 +212,11 @@ public class Product implements java.io.Serializable {
 	}
 
 	@Column(name = "BATTERY_CAPACITY")
-	public Integer getBatteryCapacity() {
+	public int getBatteryCapacity() {
 		return this.batteryCapacity;
 	}
 
-	public void setBatteryCapacity(Integer batteryCapacity) {
+	public void setBatteryCapacity(int batteryCapacity) {
 		this.batteryCapacity = batteryCapacity;
 	}
 

@@ -3,6 +3,7 @@ package javaweb.services.imple;
 import java.util.List;
 
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import javaweb.Entity.Trademark;
@@ -26,6 +27,21 @@ public class TradeMark implements javaweb.services.inter.TradeMark{
 		Trademark rs = (Trademark) ss.createQuery("FROM Trademark WHERE id = :ID").setParameter("ID", ID);
 		ss.close();
 		return rs;
+	}
+	@Override
+	public Trademark postNew(String name) {
+		Session ss = factory.getSession();
+		ss.beginTransaction();
+		Trademark temp = (Trademark) ss.createCriteria(Trademark.class).add(Restrictions.eq("name", name)).uniqueResult();
+		if(temp!=null)
+			return temp;
+		temp = new Trademark();
+		temp.setName(name);
+		ss.save(temp);
+		Trademark tempRS = temp;
+		ss.getTransaction().commit();
+		ss.close();
+		return tempRS;
 	}
 
 }

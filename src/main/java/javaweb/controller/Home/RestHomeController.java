@@ -137,7 +137,7 @@ public class RestHomeController {
 		UserSession userSs = (UserSession) session.getAttribute("UserSession");
 		if (userSs == null)
 			return "{ \"status\": 3}";// chua dang nhap
-		if (rate.setRating(userSs.getAccInfor().getUsername(), idProduct, value) == false)
+		if (rate.putRating(userSs.getAccInfor().getUsername(), idProduct, value) == false)
 			return "{ \"status\": 2}";// them khong thanh cong
 		userSs.setAccInfor(acc.getByUsername(userSs.getAccInfor().getUsername(), false));
 		session.setAttribute("UserSession", userSs);//cap nhat lai account trong session

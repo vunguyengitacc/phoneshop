@@ -106,17 +106,6 @@
 		</div>
 		<div class="nav-item">
 			<div class="container">
-				<div class="nav-depart">
-					<div class="depart-btn">
-						<i class="ti-menu"></i> <span>Thương hiệu</span>
-						<ul class="depart-hover">
-							<c:forEach var="item" items="${lstTradeMark }">
-								<li><a
-									href="/Web/trang-chu/san-pham?trang=1&thuongHieu=${item.name }&timKiem=">${item.name }</a></li>
-							</c:forEach>
-						</ul>
-					</div>
-				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
 						<li><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
@@ -191,11 +180,6 @@
 								<div class="pd-title">
 									<span>${pro.trademark.name }</span>
 									<h3>${pro.name }</h3>
-								</div>
-								<div class="pd-rating">
-									<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-										class="fa fa-star-o"></i> <span>(5)</span>
 								</div>
 								<div class="pd-desc">
 									<p>${pro.description }</p>
@@ -374,9 +358,9 @@
 							</div>
 							<!-- Rating -->
 
-							<h4>${lstComment.size() }bìnhluận</h4>
+							<h4>${lstComment.size() } bìnhluận</h4>
 							<div class="comment-option" id="scrollBox"
-								style="height: 100vh; overflow-y: scroll;">
+								style="height: 65vh; overflow-y: scroll;">
 								<c:forEach var="item" items="${lstComment }">
 
 									<div class="co-item">
@@ -607,7 +591,8 @@
 			var z = $("#amountInput");
 			if(z.val()==0){
 				$("#contentForCartAction").html("Vui lòng nhập số lượng nhiều hơn 0");
-				$("#modalCart").modal('show');	
+				$("#modalCart").modal('show');
+				return;
 			}
 			$.ajax({
 				url : "/Web/trang-chu/api/gio-hang/cap-nhat-gio-hang?idMau=" + x.val()
@@ -631,7 +616,6 @@
 				error : function(error) {
 					$("#contentForCartAction").html("Đã xảy ra lỗi");
 					$("#modalCart").modal('show');
-					console.log(error);
 				}
 			})
 		}

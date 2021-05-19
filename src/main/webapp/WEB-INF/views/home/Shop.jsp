@@ -107,17 +107,6 @@
 		</div>
 		<div class="nav-item">
 			<div class="container">
-				<div class="nav-depart">
-					<div class="depart-btn">
-						<i class="ti-menu"></i> <span>Thương hiệu</span>
-						<ul class="depart-hover">
-							<c:forEach var="item" items="${lstTradeMark }">
-								<li><a
-									href="/Web/trang-chu/san-pham?trang=1&thuongHieu=${item.name }&timKiem=">${item.name }</a></li>
-							</c:forEach>
-						</ul>
-					</div>
-				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
 						<li><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
@@ -279,8 +268,7 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#"><img
-								src="<c:url value="/template/Home/img/footer-logo.png"/>" alt=""></a>
+							<a href="#">LV Shop</a>
 						</div>
 						<ul>
 							<li>Địa chỉ: Khu công nghệ cao quận 9, Tp. Hồ Chí Minh</li>

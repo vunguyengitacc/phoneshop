@@ -45,7 +45,7 @@
 	href="<c:url value="/template/Home/css/style.css"/>" type="text/css">
 </head>
 
-<body>
+<body id="bodyHTML">
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="header-top">
@@ -105,17 +105,6 @@
 		</div>
 		<div class="nav-item">
 			<div class="container">
-				<div class="nav-depart">
-					<div class="depart-btn">
-						<i class="ti-menu"></i> <span>Thương hiệu</span>
-						<ul class="depart-hover">
-							<c:forEach var="item" items="${lstTradeMark }">
-								<li><a
-									href="/Web/trang-chu/san-pham?trang=1&thuongHieu=${item.name }&timKiem=">${item.name }</a></li>
-							</c:forEach>
-						</ul>
-					</div>
-				</div>
 				<nav class="nav-menu mobile-menu">
 					<ul>
 						<li class="active"><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
@@ -250,7 +239,7 @@
 										class="form-control" id="gender">
 										<c:choose>
 											<c:when
-												test="${sessionScope.UserSession.accInfor.phone == '1' }">
+												test="${sessionScope.UserSession.accInfor.gender == '1' }">
 												<option value="1">Nam</option>
 												<option value="2">Nữ</option>
 											</c:when>
@@ -314,6 +303,26 @@
 	</div>
 	<!-- Profile End -->
 
+	<!-- Modal Add Cart	Start-->
+	<div class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		id="modalCart">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="contentForCartAction">...</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Add Cart	End-->
+
+
 	<!-- Product Shop Section Begin -->
 	<footer class="footer-section">
 		<div class="container">
@@ -364,6 +373,7 @@
 			</div>
 		</div>
 	</footer>
+	<form action="/Web/trang-chu/trang-ca-nhan" id="reloadTrick"></form>
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
@@ -386,13 +396,39 @@
 			var b = $("#email");
 			var c = $("#phoneNumber");
 			var d = $("#gender");
-			var reGexForName = /^[a-zA-Z]+$/g;
 			var reGexForEmail = /^[a-zA-Z]+@gmail.com$/g;
-			var reGexForName = /^(0|+84)[0-9]{9}$/g;
-			if(reGexForName.test(a.val())==false){
-				alert("Chỉ được nhập kí tự chữ");
+			var reGexForPhone = /^(0|\+84)[0-9]{9}$/g;
+			if(!reGexForEmail.test(b.val())||!reGexForPhone.test(c.val())){
+				$("#contentForCartAction").html("Vui lòng nhập đúng định dạng");
+				$("#modalCart").modal('show');
 				return;
 			}
+			$.ajax({
+				url: "/Web/trang-chu/api//tai-khoan/cap-nhat-thong-tin?tenHienThi="+a.val()+"&email="+b.val()+"&soDienThoai="+c.val()+"&gioiTinh="+d.val(),
+				type: 'PUT',
+				success: (response)=>{
+					var objJson = JSON.parse(response);
+					if(objJson.status == 1){
+						$("#contentForCartAction").html("Cập nhật thành công!");
+						$("#modalCart").modal('show');
+						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1500);
+					}
+					if(objJson.status == 2){
+						$("#contentForCartAction").html("Cập nhật thất bại");
+						$("#modalCart").modal('show');
+						
+					}
+					if(objJson.status == 3){
+						$("#contentForCartAction").html("Lỗi! Bạn chưa đăng nhập");
+						$("#modalCart").modal('show');
+						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1500);
+					}
+				},
+				error: (error)=>{
+					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#modalCart").modal('show');
+				}
+			})	
 		}
 	
 		function changePassHandler() {
@@ -401,31 +437,46 @@
 			var z = $("#confirmPass");
 			var reGex = /^[a-z0-9]{8,20}$/g;
 			if(reGex.test(y.val())==false){
-				console.log("Chỉ được nhập kí tự chữ viết thường và kí tự chữ số");
+				$("#contentForCartAction").html("Chỉ được nhập kí tự chữ thường và kí tự số");
+				$("#modalCart").modal('show');
 				return;
 			}
 			if(y.val()!=z.val()){
-				console.log("Nhập sai mã xác nhận");
+				$("#contentForCartAction").html("Nhập sai mã xác nhận");
+				$("#modalCart").modal('show');
 				return;
 			}
 			$.ajax({
-				url: "\Web\trang-chu\api\tai-khoan\doi-mat-khau?matKhauMoi="+y.val(),
+				url: "/Web/trang-chu/api/tai-khoan/doi-mat-khau?matKhauMoi="+y.val(),
 				type: 'PUT',
 				success: (response)=>{
 					var objJson = JSON.parse(response);
-					if(objJson.status == 1)
-						console.log("Thành công");
-					if(objJson.status == 2)
-						console.log("Không thành công");
-					if(objJson.status == 3)
-						console.log("Chưa đăng nhập");
+					if(objJson.status == 1){
+						$("#contentForCartAction").html("Cập nhật thành công! Vui lòng đăng nhập lại");
+						$("#modalCart").modal('show');
+						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1000);
+					}
+					if(objJson.status == 2){
+						$("#contentForCartAction").html("Cập nhật thất bại");
+						$("#modalCart").modal('show');
+						
+					}
+					if(objJson.status == 3){
+						$("#contentForCartAction").html("Lỗi! Bạn chưa đăng nhập");
+						$("#modalCart").modal('show');
+						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1000);
+					}
 				},
 				error: (error)=>{
-					console.log("Đã xảy ra lỗi");
+					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#modalCart").modal('show');
 				}
 			})
 		}
-				
+		
+		function reloadPage(){
+			$("#reloadTrick").submit();
+		}
 	</script>
 </body>
 

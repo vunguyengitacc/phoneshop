@@ -24,7 +24,7 @@ public class Account implements java.io.Serializable {
 	private String email;
 	private String phone;
 	private int type;
-	private byte status;
+	private int status;
 	private String name;
 	private int gender;
 	private Set<Rating> ratings = new HashSet<Rating>(0);
@@ -105,11 +105,11 @@ public class Account implements java.io.Serializable {
 	}
 
 	@Column(name = "STATUS", nullable = false)
-	public byte getStatus() {
+	public int getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(byte status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

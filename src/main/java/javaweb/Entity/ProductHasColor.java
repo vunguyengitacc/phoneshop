@@ -62,8 +62,8 @@ public class ProductHasColor implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "COLOR_ID", nullable = false, insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "COLOR_ID", nullable = true, insertable = false, updatable = false)
 	public Color getColor() {
 		return this.color;
 	}
@@ -72,8 +72,8 @@ public class ProductHasColor implements java.io.Serializable {
 		this.color = color;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PRODUCT_ID", nullable = false, insertable = false, updatable = false)
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "PRODUCT_ID", nullable = true, insertable = false, updatable = false)
 	public Product getProduct() {
 		return this.product;
 	}

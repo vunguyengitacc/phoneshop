@@ -2,15 +2,16 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="zxx">
 <head>
-<meta charset="utf-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-
+<meta charset="UTF-8">
+<meta name="description" content="Fashi Template">
+<meta name="keywords" content="Fashi, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>LV Shop</title>
 
-<!-- GOOGLE FONTS -->
+<!-- Google Font -->
 <link
 	href="https://fonts.googleapis.com/css?family=Montserrat:400,500|Poppins:400,500,600,700|Roboto:400,500"
 	rel="stylesheet" />
@@ -19,33 +20,34 @@
 	href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css"
 	rel="stylesheet" />
 
-<!-- SLEEK CSS -->
+
+<link
+	href="<c:url value="/template/Admin/assets/plugins/data-tables/datatables.bootstrap4.min.css"/>"
+	rel='stylesheet'>
+
+
+<!-- Css Styles -->
 <link id="sleek-css" rel="stylesheet"
-	href="<c:url value="template/Admin/assets/css/sleek.css"/>" />
+	href="<c:url value="/template/Admin/assets/css/sleek.css"/>" />
+
+<script
+	src="<c:url value="/template/Admin/assets/plugins/nprogress/nprogress.js"/>"></script>
 </head>
 
 <body class="header-fixed sidebar-fixed sidebar-dark header-light"
 	id="body">
-
-	<!-- ====================================
-    ——— WRAPPER
-    ===================================== -->
 	<div class="wrapper">
-
-		<!-- ====================================
-          ——— LEFT SIDEBAR WITH OUT FOOTER
-        ===================================== -->
 		<aside class="left-sidebar bg-sidebar">
 			<div id="sidebar" class="sidebar sidebar-with-footer">
 				<!-- Aplication Brand -->
 				<div class="app-brand">
-					<a href="/Web/admin/general" title="Sleek Dashboard"> <span
+					<a href="#" title="Sleek Dashboard"> <span
 						class="brand-name text-truncate">LV Shop</span>
 					</a>
 				</div>
 
 				<!-- begin sidebar scrollbar -->
-				<div class="" data-simplebar style="height: 100%;">
+				<div data-simplebar style="height: 100%;">
 					<!-- sidebar menu -->
 					<ul class="nav sidebar-inner" id="sidebar-menu">
 
@@ -55,31 +57,17 @@
 									lí chung</span>
 						</a></li>
 
-						<li class="has-sub "><a class="sidenav-item-link" href="#"
-							aria-expanded="false" style="cursor: pointer;"> <i
-								class="mdi mdi-cart"></i> <span class="nav-text">Quản lí
-									hoá đơn</span>
+						<li class="has-sub "><a class="sidenav-item-link"
+							href="/Web/admin/danh-sach-hoa-don" aria-expanded="false"
+							style="cursor: pointer;"> <i class="mdi mdi-cart"></i> <span
+								class="nav-text">Quản lí hoá đơn</span>
 						</a></li>
 						<!--Products-->
 						<li class="has-sub "><a class="sidenav-item-link"
-							data-toggle="collapse" data-target="#tables"
-							aria-expanded="false" aria-controls="tables"
-							style="cursor: pointer;"> <i
-								class="mdi mdi-paper-cut-vertical"></i> <span class="nav-text">Quản
-									lí sản phẩm</span> <b class="caret"></b>
-						</a>
-
-							<ul class="collapse " id="tables" data-parent="#sidebar-menu">
-									<li class=""><a class="sidenav-item-link"
-										href="basic-tables.html"> <span class="nav-text">Thương
-												hiệu</span>
-									</a></li>
-									<li class=""><a class="sidenav-item-link"
-										href="basic-tables.html"> <span class="nav-text">Mặt
-												hàng</span>
-									</a></li>
-
-							</ul></li>
+							href="/Web/admin/danh-sach-san-pham" aria-expanded="false"
+							style="cursor: pointer;"> <i class="mdi mdi-cart"></i> <span
+								class="nav-text">Quản lí sản phẩm</span>
+						</a></li>
 						<!--Account-->
 						<li class="has-sub "><a class="sidenav-item-link"
 							data-toggle="collapse" data-target="#accountMenu"
@@ -90,22 +78,20 @@
 
 							<ul class="collapse " id="accountMenu"
 								data-parent="#sidebar-menu">
-									<li class=""><a class="sidenav-item-link"
-										href="basic-tables.html"> <span class="nav-text">Cá
-												nhân</span>
+								<div class="sub-menu">
+									<li><a class="sidenav-item-link" href="#"> <span
+											class="nav-text"> Cá nhân</span>
 									</a></li>
-									<li class=""><a class="sidenav-item-link"
-										href="basic-tables.html"> <span class="nav-text">Khách
-												hàng</span>
+									<li class=""><a class="sidenav-item-link" href="#"> <span
+											class="nav-text"> Khách hàng</span>
 									</a></li>
-
+								</div>
 							</ul></li>
 					</ul>
 				</div>
 
 			</div>
 		</aside>
-
 
 		<!-- ====================================
         ——— PAGE WRAPPER
@@ -143,31 +129,48 @@
 												role="tabpanel" aria-labelledby="home2-tab">
 												<ul class="list-unstyled" data-simplebar
 													style="height: 360px">
+													<c:if test="${watingOrderAmount!='0' }">
+														<li><div
+																class="media media-message media-notification">
 
-													<li><a href="#"
-														class="media media-message media-notification">
-
-															<div
-																class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
-																<i class="mdi mdi-account-multiple-check font-size-20"></i>
-															</div>
-
-															<div class="media-body d-flex justify-content-between">
-																<div class="message-contents">
-																	<h4 class="title">Hoá đơn chờ duyệt</h4>
-																	<p class="last-msg font-size-14">10.000.000VNĐ</p>
-
-																	<button type="button"
-																		class="my-1 btn btn-sm btn-success">Xem</button>
-
-																	<span
-																		class="font-size-12 font-weight-medium text-secondary d-block">
-																		<i class="mdi mdi-clock-outline"></i> 5 phút trước...
-																	</span>
+																<div
+																	class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
+																	<i class="mdi mdi-account-multiple-check font-size-20"></i>
 																</div>
-															</div>
-													</a></li>
 
+																<div class="media-body d-flex justify-content-between">
+																	<div class="message-contents">
+																		<h4 class="title">Hoá đơn chờ duyệt</h4>
+																		<p class="last-msg font-size-14">${watingOrderAmount }
+																			hoá đơn</p>
+																		<a href="#" class="my-1 btn btn-sm btn-success">Đến
+																			trang hoá đơn</a>
+																	</div>
+																</div>
+															</div></li>
+
+													</c:if>
+													<c:if test="${watingOrderAmountToday!= '0' }">
+														<li><div
+																class="media media-message media-notification">
+
+																<div
+																	class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
+																	<i class="mdi mdi-account-multiple-check font-size-20"></i>
+																</div>
+
+																<div class="media-body d-flex justify-content-between">
+																	<div class="message-contents">
+																		<h4 class="title">Hoá đơn mới</h4>
+																		<p class="last-msg font-size-14">${watingOrderAmountToday }
+																			hoá đơn</p>
+																		<a href="#" class="my-1 btn btn-sm btn-warning">Đến
+																			trang hoá đơn</a>
+																	</div>
+																</div>
+															</div></li>
+
+													</c:if>
 												</ul>
 											</div>
 
@@ -179,34 +182,42 @@
 							<li class="right-sidebar-in right-sidebar-2-menu"><i
 								class="mdi mdi-settings mdi-spin"></i></li>
 							<!-- User Account -->
-							<li class="dropdown user-menu">
-								<a href="#" class="dropdown-toggle nav-link"
-									data-toggle="dropdown">
-									<img src="assets/img/user/user.png" class="user-image"
-										alt="User Image" /> <span class="d-none d-lg-inline-block">Abdus
-										Salam</span>
-								</a>
+							<li class="dropdown user-menu"><a href="#"
+								class="dropdown-toggle nav-link" data-toggle="dropdown"> <c:choose>
+										<c:when
+											test="${sessionScope.UserSession.accInfor.name != null }">
+											<span class="d-none d-lg-inline-block">${sessionScope.UserSession.accInfor.name }</span>
+										</c:when>
+										<c:otherwise>
+											<span class="d-none d-lg-inline-block">${sessionScope.UserSession.accInfor.username }</span>
+										</c:otherwise>
+									</c:choose>
+							</a>
 								<ul class="dropdown-menu dropdown-menu-right">
 									<!-- User image -->
 									<li class="dropdown-header"><img
 										src="assets/img/user/user.png" class="img-circle"
 										alt="User Image" />
 										<div class="d-inline-block">
-											Abdus Salam <small class="pt-1">iamabdus@gmail.com</small>
+											<c:choose>
+												<c:when
+													test="${sessionScope.UserSession.accInfor.name != null }">
+											${sessionScope.UserSession.accInfor.name }
+										</c:when>
+												<c:otherwise>
+										${sessionScope.UserSession.accInfor.username }
+										</c:otherwise>
+											</c:choose>
+											<small class="pt-1">${sessionScope.UserSession.accInfor.email }</small>
 										</div></li>
 
-									<li><a href="user-profile.html"> <i
-											class="mdi mdi-account"></i> Thông tin cá nhân
+									<li><a href="#"> <i class="mdi mdi-account"></i> Thông
+											tin cá nhân
 									</a></li>
-									<li class="right-sidebar-in"><a href="javascript:0"> <i
-											class="mdi mdi-settings"></i> Cài đặt tài khoản
+									<li class="dropdown-footer"><a href="/Web/admin/log-out">
+											<i class="mdi mdi-logout"></i> Đăng xuất
 									</a></li>
-
-									<li class="dropdown-footer"><a href="index.html"> <i
-											class="mdi mdi-logout"></i> Đăng xuất
-									</a></li>
-								</ul>
-							</li>
+								</ul></li>
 						</ul>
 					</div>
 				</nav>
@@ -238,8 +249,7 @@
 													<th>Tên hiển thị</th>
 													<th>Tên đăng nhập</th>
 													<th>Giới tính</th>
-													<th>Ngày tạo</th>
-													<th>Tổng chi</th>
+													<th>Hoá đơn</th>
 													<th>Số điện thoại</th>
 													<th>E-mail</th>
 													<th>Khoá tài khoản</th>
@@ -247,40 +257,40 @@
 											</thead>
 
 											<tbody>
+												<c:forEach var="item" items="${lstAccount }">
+													<tr>
+														<td>${item.name }</td>
+														<td>${item.username }</td>
+														<c:choose>
+															<c:when test="${item.gender == '1' }">
+																<td>Nam</td>
+															</c:when>
+															<c:otherwise>
+																<td>Nữ</td>
+															</c:otherwise>
+														</c:choose>
+														<td>${item.bills.size() }</td>
+														<td>${item.phone }</td>
+														<td>${item.email }</td>
+														<td><label
+															onclick="banAccountHandler('<c:out value="${item.username}"/>')"
+															class="switch switch-text switch-danger switch-pill form-control-label">
+																<c:choose>
+																	<c:when test="${item.status == 1 }">
+																		<input type="checkbox"
+																			class="switch-input form-check-input" value="on">
+																	</c:when>
+																	<c:otherwise>
+																		<input type="checkbox"
+																			class="switch-input form-check-input" value="on"
+																			checked="checked">
+																	</c:otherwise>
+																</c:choose> <span class="switch-label" data-on="On" data-off="Off"></span>
+																<span class="switch-handle"></span>
+														</label></td>
+													</tr>
 
-												<tr>
-													<td>Tiger</td>
-													<td>System Architect</td>
-													<td>Nam</td>
-													<td>2011/04/25</td>
-													<td>$320,800</td>
-													<td>5421</td>
-													<td>t.nixon@datatables.net</td>
-													<td><label
-														class="switch switch-text switch-danger switch-pill form-control-label">
-															<input type="checkbox"
-															class="switch-input form-check-input" value="on" checked>
-															<span class="switch-label" data-on="On" data-off="Off"></span>
-															<span class="switch-handle"></span>
-													</label></td>
-												</tr>
-
-												<tr>
-													<td>Garrett</td>
-													<td>Accountant</td>
-													<td>Nữ</td>
-													<td>2011/07/25</td>
-													<td>$170,750</td>
-													<td>8422</td>
-													<td>g.winters@datatables.net</td>
-													<td><label
-														class="switch switch-text switch-danger switch-pill form-control-label">
-															<input type="checkbox"
-															class="switch-input form-check-input" value="on">
-															<span class="switch-label" data-on="On" data-off="Off"></span>
-															<span class="switch-handle"></span>
-													</label></td>
-												</tr>
+												</c:forEach>
 											</tbody>
 										</table>
 									</div>
@@ -300,6 +310,26 @@
 	</div>
 	<!-- End Wrapper -->
 
+	<!-- Modal Add Cart	Start-->
+	<div class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		id="modalCart">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="contentForCartAction">...</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Add Cart	End-->
+
+
 
 
 	<!-- Javascript -->
@@ -314,6 +344,34 @@
 		src="<c:url value="/template/Admin/assets/plugins/data-tables/datatables.bootstrap4.min.js"/>"></script>
 
 	<script src="<c:url value="/template/Admin/assets/js/sleek.js"/>"></script>
+	<script type="text/javascript">
+		function banAccountHandler(x) {
+			$.ajax({
+				url: "/Web/admin/api/tai-khoan/khoa?username="+x,
+				type: 'PUT',
+				success: (response)=>{
+					var objJson = JSON.parse(response);
+					if(objJson.status == 1){
+						$("#contentForCartAction").html("Cập nhật thành công");
+						$("#modalCart").modal('show');
+					}
+					if(objJson.status == 2){
+						$("#contentForCartAction").html("Cập nhật thất bại");
+						$("#modalCart").modal('show');
+						
+					}
+					if(objJson.status == 3){
+						$("#contentForCartAction").html("Lỗi! Bạn chưa đăng nhập");
+						$("#modalCart").modal('show');
+					}
+				},
+				error: (error)=>{
+					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#modalCart").modal('show');
+				}
+			})	
+		} 
+	</script>
 
 </body>
 </html>

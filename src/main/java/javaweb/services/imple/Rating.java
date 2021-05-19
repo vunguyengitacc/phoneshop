@@ -30,7 +30,7 @@ public class Rating implements javaweb.services.inter.Rating {
 	}
 
 	@Override
-	public boolean setRating(String username, int productId, int value) {
+	public boolean putRating(String username, int productId, int value) {
 		Session ss = factory.getSession();
 		ss.beginTransaction();
 		javaweb.Entity.Rating rs = (javaweb.Entity.Rating) ss.createCriteria(javaweb.Entity.Rating.class)
@@ -51,7 +51,6 @@ public class Rating implements javaweb.services.inter.Rating {
 		}
 		ss.save(rs);
 		ss.getTransaction().commit();
-		;
 		ss.close();
 		return true;
 	}

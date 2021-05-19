@@ -2,6 +2,8 @@ package javaweb.services.imple;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ public class Account implements javaweb.services.inter.Account {
 	public javaweb.Entity.Account getByUsernameAndPass(String username, String password, boolean isLazy) {
 		Session ss = factory.getSession();
 		ss.beginTransaction();
+		@SuppressWarnings("rawtypes")
 		List rs;
 		if (isLazy == true)
 			rs = ss.createQuery("FROM Account  WHERE username =:name AND password =:password")
@@ -33,6 +36,7 @@ public class Account implements javaweb.services.inter.Account {
 	public javaweb.Entity.Account getByUsername(String username, boolean isLazy) {
 		Session ss = factory.getSession();
 		ss.beginTransaction();
+		@SuppressWarnings("rawtypes")
 		List rs;
 		if (isLazy == true)
 			rs = ss.createQuery("FROM Account WHERE username=:name").setParameter("name", username).list();
@@ -73,8 +77,8 @@ public class Account implements javaweb.services.inter.Account {
 		ss.beginTransaction();
 		javaweb.Entity.Account rs = (javaweb.Entity.Account) ss.createCriteria(javaweb.Entity.Account.class)
 				.add(Restrictions.eq("username", username)).uniqueResult();
-		
-		if(rs == null) {
+
+		if (rs == null) {
 			ss.close();
 			return false;
 		}
@@ -85,15 +89,59 @@ public class Account implements javaweb.services.inter.Account {
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<javaweb.Entity.Account> getAll() {
 		Session ss = factory.getSession();
 		ss.beginTransaction();
+		@SuppressWarnings("rawtypes")
 		List rs = ss.createCriteria(javaweb.Entity.Account.class).list();
 		ss.close();
 		if (rs.size() == 0)
 			return null;
 		return rs;
+	}
+
+	@Override
+	public javaweb.Entity.Account getByUsernameFetch(String username, String fetchField) {
+		Session ss = factory.getSession();
+		ss.beginTransaction();
+		@SuppressWarnings("deprecation")
+		javaweb.Entity.Account rs = (javaweb.Entity.Account) ss.createCriteria(javaweb.Entity.Account.class)
+				.add(Restrictions.eq("username", username)).setFetchMode(fetchField, FetchMode.EAGER).uniqueResult();
+		ss.close();
+		return rs;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<javaweb.Entity.Account> getAllFetch(String fetchField) {
+		Session ss = factory.getSession();
+		ss.beginTransaction();
+		@SuppressWarnings({ "rawtypes", "deprecation" })
+		List rs = ss.createCriteria(javaweb.Entity.Account.class).setFetchMode(fetchField, FetchMode.EAGER).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+		ss.close();
+		if (rs.size() == 0)
+			return null;
+		return rs;
+	}
+
+	@Override
+	public boolean setNewStatus(String username) {
+		Session ss = factory.getSession();
+		ss.beginTransaction();
+		javaweb.Entity.Account rs = (javaweb.Entity.Account) ss.createCriteria(javaweb.Entity.Account.class)
+				.add(Restrictions.eq("username", username)).uniqueResult();
+		if(rs==null)
+			return false;
+		if(rs.getStatus()==1)
+			rs.setStatus(0);
+		else
+			rs.setStatus(1);
+		ss.save(rs);
+		ss.getTransaction().commit();
+		ss.close();
+		return true;
 	}
 
 }

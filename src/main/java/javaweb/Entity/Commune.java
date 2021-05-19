@@ -55,7 +55,7 @@ public class Commune implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "WARD_ID", nullable = false)
 	public Ward getWard() {
 		return this.ward;
