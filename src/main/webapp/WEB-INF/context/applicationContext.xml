@@ -12,6 +12,24 @@
 
     <!-- Activates scanning of @Repository and @Service and @Component -->
 
-    <context:component-scan base-package="javaweb" />
+    <context:annotation-config />
+	<context:component-scan base-package="javaweb" />
+	<!-- SET default mail properties -->
+	<bean id="mailSender"
+		class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="hvlshopresetpass@gmail.com" />
+		<property name="password" value="Long20121966" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.transport.protocol">smtp</prop>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.debug">true</prop>
+			</props>
+		</property>
+	</bean>
+
 
 </beans>
