@@ -11,7 +11,8 @@ import javaweb.Entity.RatingId;
 
 @Service("Rating")
 public class Rating implements javaweb.services.inter.Rating {
-	DBContext factory = new DBContext();
+	@Autowired
+	DBContext factory;
 
 	@Autowired
 	javaweb.services.imple.Product pro;
@@ -49,7 +50,7 @@ public class Rating implements javaweb.services.inter.Rating {
 		} else {
 			rs.setRate(value);
 		}
-		ss.save(rs);
+		ss.saveOrUpdate(rs);
 		ss.getTransaction().commit();
 		ss.close();
 		return true;

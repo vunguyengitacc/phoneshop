@@ -46,23 +46,29 @@
 </head>
 
 <body>
+	<c:if test="${sessionScope.UserSession.accInfor.type == 0 }">
+		<div id="feedback">
+			<a href="/Web/admin/quan-li-chung"><i class="fas fa-user-cog"></i>Trang
+				admin</a>
+		</div>
+	</c:if>
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="header-top">
 			<div class="container">
 				<div class="ht-left">
 					<div class="mail-service">
-						<i class=" fa fa-envelope"></i> lvshop@gmail.com
+						<i class=" fa fa-envelope"></i> ${shopInfor.email }
 					</div>
 					<div class="phone-service">
-						<i class=" fa fa-phone"></i> +84 00.000.000
+						<i class=" fa fa-phone"></i> ${shopInfor.phone }
 					</div>
 				</div>
 				<div class="ht-right">
 					<c:choose>
 						<c:when test="${sessionScope.UserSession == null }">
-							<a href="#" class="login-panel"><i class="fa fa-user"></i>Đăng
-								nhập</a>
+							<a href="/Web/login" class="login-panel"><i
+								class="fa fa-user"></i>Đăng nhập</a>
 						</c:when>
 						<c:otherwise>
 							<a href="/Web/trang-chu/trang-ca-nhan" class="login-panel"><i
@@ -77,7 +83,8 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo">
-							<a href="/Web/trang-chu/"> LV SHOP </a>
+							<a href="/Web/trang-chu/" style="font-size: 1.4rem;"> LV SHOP
+							</a>
 						</div>
 					</div>
 					<div class="col-lg-7 col-md-7">
@@ -86,6 +93,7 @@
 							<form class="input-group" action="/Web/trang-chu/san-pham">
 								<input type="hidden" value="1" name="trang"> <input
 									type="hidden" value="" name="thuongHieu"> <input
+									type="hidden" value="1" name="sapXep"><input
 									type="text" placeholder="Bạn muốn tìm gì?" name="timKiem">
 								<button type="button">
 									<i class="ti-search"></i>
@@ -110,8 +118,10 @@
 					<ul>
 						<li class="active"><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
 						<li><a
-							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=">SHOP</a></li>
+							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=&sapXep=1">SHOP</a></li>
 						<li><a href="./contact.html">LIÊN HỆ</a></li>
+						<li><a href="/Web/trang-chu/ma-giam-gia?trang=1&sapXep=1">KHUYẾN
+								MÃI</a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -143,7 +153,7 @@
 				<div class="row">
 					<div class="col-lg-6">
 						<div class="checkout-content">
-							<a href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem="
+							<a href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=&sapXep=1"
 								class="content-btn">Tiếp tục mua sắm</a>
 						</div>
 						<h4>Thông tin hoá đơn</h4>
@@ -155,18 +165,18 @@
 
 							<div class="col-lg-12">
 								<label for="cun-name">Tên</label> <input type="text"
-									id="cun-name"
+									readonly="readonly" id="cun-name"
 									value="${sessionScope.UserSession.accInfor.name }">
 							</div>
 							<div class="col-lg-6">
-								<label for="email">Email Address<span>*</span></label> <input
-									type="text" id="email"
+								<label for="email">Địa chỉ email</label> <input type="text"
+									id="email" readonly="readonly"
 									value="${sessionScope.UserSession.accInfor.email }">
 							</div>
 							<div class="col-lg-6">
-								<label for="phone">Phone<span>*</span></label> <input
-									type="text" id="phone"
-									value="${sessionScope.UserSession.accInfor.email }">
+								<label for="phone">Số điện thoại</label> <input type="text"
+									id="phone" readonly="readonly"
+									value="${sessionScope.UserSession.accInfor.phone }">
 							</div>
 
 							<div class="col-lg-12 mt-3">
@@ -174,24 +184,23 @@
 								<hr>
 							</div>
 							<div class="col-lg-12">
-								<label for="city">Tỉnh\ Thành phố<span>*</span></label> <select
-									id="city">
-									<option>Tp.Hồ Chí Minh</option>
-									<option>Bình Dương</option>
+								<label for="city">Tỉnh\ Thành phố<span
+									style="color: red;">*</span></label> <select id="city"
+									onchange="loadWard()">
+									<option value="0">Chọn tỉnh</option>
+									<c:forEach var="item" items="${lstDistrict }">
+										<option value="${item.id }">${item.name }</option>
+									</c:forEach>
 								</select>
 							</div>
 							<div class="col-lg-12">
 								<label for="ward">Quận\ Huyện\ Thị xã<span>*</span></label> <select
-									id="ward">
-									<option>Quận 1</option>
-									<option>Quận 2</option>
+									onclick="loadCommune()" id="ward">
 								</select>
 							</div>
 							<div class="col-lg-12">
 								<label for="commune">Xã\ Phường\ Thị trấn<span>*</span></label>
-								<select id="commune" name="maDiaChi">
-									<option value="1">Quận 1</option>
-									<option value="2">Quận 2</option>
+								<select id="commune" name="maDiaChi" required="required">
 								</select>
 							</div>
 						</div>
@@ -199,12 +208,8 @@
 					<div class="col-lg-6">
 						<div class="checkout-content">
 							<input type="text" placeholder="Nhập mã khuyến mãi"
+								value="${sessionScope.cart.promo.id }" readonly="readonly"
 								style="margin-bottom: 0;" id="discountCode" name="maGiamGia">
-							<div style="width: 100%; display: flex;">
-								<button class="site-btn"
-									style="width: 100%; text-align: center;" id="btnCheckDiscount"
-									onclick="sendDiscountCodeHandler()">SỬ DỤNG MÃ</button>
-							</div>
 						</div>
 						<div class="place-order">
 							<h4>Chi tiết mua hàng</h4>
@@ -216,7 +221,8 @@
 											${item.color.name } x ${item.amount } <span>${item.value }</span>
 										</li>
 									</c:forEach>
-									<li class="total-price">Total <span>${sessionScope.cart.totalValue }</span></li>
+									<li class="total-price">Tổng cộng <span>${sessionScope.cart.totalValue }</span></li>
+									<li class="total-price">Phải trả <span>${sessionScope.cart.promoValue }</span></li>
 								</ul>
 							</div>
 						</div>
@@ -226,7 +232,8 @@
 							<c:choose>
 								<c:when test="${sessionScope.cart.lstItem.size()=='0' }">
 									<button type="button" class="site-btn place-btn mt-4 btn-light"
-										style="width: 100%;"  onclick="nullCartHandler()">XÁC NHẬN MUA HÀNG</button>
+										style="width: 100%;" onclick="nullCartHandler()">XÁC
+										NHẬN MUA HÀNG</button>
 								</c:when>
 								<c:otherwise>
 									<button type="submit" class="site-btn place-btn mt-4"
@@ -268,12 +275,12 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#">LV Shop</a>
+							<a href="#" style="font-size: 1.5rem; color: white;">LV Shop</a>
 						</div>
 						<ul>
-							<li>Địa chỉ: Khu công nghệ cao quận 9, Tp. Hồ Chí Minh</li>
-							<li>SĐT: +84 00.000.000</li>
-							<li>Email: lvshop@gmail.com</li>
+							<li>Địa chỉ: ${shopInfor.address }</li>
+							<li>SĐT: ${shopInfor.phone }</li>
+							<li>Email: ${shopInfor.email }</li>
 						</ul>
 						<div class="footer-social">
 							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
@@ -285,10 +292,10 @@
 				</div>
 				<div class="col-lg-2 offset-lg-1">
 					<div class="footer-widget">
-						<h5>Về chúng tôi</h5>
+						<h5>Shop</h5>
 						<ul>
-							<li><a href="#">Chính sách</a></li>
-							<li><a href="#">Liên hệ</a></li>
+							<li><a href="/Web/trang-chu/san-pham?timKiem=&thuongHieu=&sapXep=1&trang=1">Sản phẩm</a></li>
+							<li><a href="/Web/trang-chu/lien-he">Liên hệ</a></li>
 						</ul>
 					</div>
 				</div>
@@ -296,21 +303,39 @@
 					<div class="footer-widget">
 						<h5>Tài khoản</h5>
 						<ul>
-							<li><a href="#">Thông tin</a></li>
-							<li><a href="#">Giỏ hàng</a></li>
+							<li><a href="/Web/trang-chu/trang-ca-nhan">Thông tin</a></li>
+							<li><a href="/Web/trang-chu/gio-hang">Giỏ hàng</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="newslatter-item">
 						<h5>Phản hồi với chúng tôi</h5>
-						<a href="#">Gửi email để chúng tôi có thể tiếp nhận ý kiến của
-							bạn.</a>
+						<p>Gửi email để chúng tôi có thể tiếp nhận ý kiến của
+							bạn</p>
 					</div>
 				</div>
 			</div>
 		</div>
 	</footer>
+
+	<div class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		id="modalCart">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="contentForCartAction">...</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Footer Section End -->
 
 	<!-- Js Plugins -->
@@ -326,12 +351,91 @@
 	<script src="<c:url value="/template/Home/js/jquery.slicknav.js"/>"></script>
 	<script src="<c:url value="/template/Home/js/owl.carousel.min.js"/>"></script>
 	<script src="<c:url value="/template/Home/js/main.js"/>"></script>
-	<script type="text/javascript">
+	<script type="text/javascript" charset="utf-8">
 		function nullCartHandler() {
 			$("#contentForCartAction").html("Bạn chưa có vật phẩm nào trong giỏ hàng");
 			$("#modalCart").modal('show');
 		}
-	</script>
+		
+		function loadWard(){
+			var distr = $("#city");
+			if(distr.val()==0){
+				$("#ward").empty();
+				$("#commune").empty();
+				return;
+			}
+			$.ajax({
+				url: "/Web/trang-chu/api/huyen?idTinh="+distr.val(),
+				type: "GET",
+				success: (response)=>{
+					var objJson = JSON.parse(response);
+					$("#ward").empty();
+					$("#commune").empty();
+					if(typeof(objJson.message) != "undefined")
+					{
+						return;
+					}
+					$("#ward").empty();
+					$("#commune").empty();
+					var opt = $('<option></option>');
+				    opt.val("0");
+				    opt.text("Chọn");
+				    $("#ward").append(opt);
+					var i=-1;
+					for(var x in objJson){
+						i++;
+						var opt = $('<option></option>');
+					    opt.val(objJson[i].id);
+					    opt.text(objJson[i].name);
+					    $("#ward").append(opt);
+					}
+					
+				},
+				error: (error)=>{
+					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#modalCart").modal('show');
+				}
+			})
+		}
+		
+		function loadCommune(){
+			var ward = $("#ward");
+			if(ward.val()==0||ward.val()==null){
+				$("#commune").empty();
+				return;
+			}
+			$.ajax({
+				url: "/Web/trang-chu/api/xa?idHuyen="+ward.val(),
+				type: "GET",
+				success: (response)=>{
+					var objJson = JSON.parse(response);	
+					$("#commune").empty();
+					if(typeof(objJson.message) != "undefined")
+					{
+						return;
+					}
+					$("#commune").empty();
+					var opt = $('<option></option>');
+				    opt.val("0");
+				    opt.text("Chọn");
+				    $("#commune").append(opt);
+					var i=-1;
+					for(var x in objJson){
+						i++;
+						var opt = $('<option></option>');
+					    opt.val(objJson[i].id);
+					    opt.text(objJson[i].name);
+					    $("#commune").append(opt);
+					}
+					
+				},
+				error: (error)=>{
+					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#modalCart").modal('show');
+				}
+			})
+		}
+		</script>
 </body>
 
 </html>

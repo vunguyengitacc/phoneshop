@@ -27,5 +27,7 @@
 		<mapping class="javaweb.Entity.Commune" />
 		<mapping class="javaweb.Entity.Comment" />
 		<mapping class="javaweb.Entity.Promotion" />
+		<mapping class="javaweb.Entity.Session" />
+		<mapping class="javaweb.Entity.GeneralInformation" />
 	</session-factory>
 </hibernate-configuration>

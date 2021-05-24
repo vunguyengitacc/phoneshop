@@ -32,7 +32,11 @@
 <script
 	src="<c:url value="/template/Admin/assets/plugins/nprogress/nprogress.js"/>"></script>
 </head>
-
+<style>
+	tbody tr:hover{
+		background-color: #EEEEEE;
+	}
+</style>
 <body class="header-fixed sidebar-fixed sidebar-dark header-light"
 	id="body">
 
@@ -48,7 +52,7 @@
 			<div id="sidebar" class="sidebar sidebar-with-footer">
 				<!-- Aplication Brand -->
 				<div class="app-brand">
-					<a href="/Web/admin/general" title="Sleek Dashboard"> <span
+					<a href="/Web/trang-chu/" title="Sleek Dashboard"> <span
 						class="brand-name text-truncate">LV Shop</span>
 					</a>
 				</div>
@@ -58,44 +62,37 @@
 					<!-- sidebar menu -->
 					<ul class="nav sidebar-inner" id="sidebar-menu">
 
-						<li class="has-sub "><a class="sidenav-item-link" href="#"
-							aria-expanded="false" style="cursor: pointer;"> <i
+						<li class="has-sub "><a class="sidenav-item-link"
+							href="/Web/admin/quan-li-chung" aria-expanded="false"
+							style="cursor: pointer;"> <i
 								class="mdi mdi-pencil-box-multiple"></i> <span class="nav-text">Quản
 									lí chung</span>
 						</a></li>
 
-						<li class="has-sub "><a class="sidenav-item-link" href="#"
+						<li class="has-sub "><a class="sidenav-item-link" href="#"  style="color: white; font-size: 1.005rem"
 							aria-expanded="false" style="cursor: pointer;"> <i
-								class="mdi mdi-cart"></i> <span class="nav-text">Quản lí
-									hoá đơn</span>
+								class="mdi mdi-cart"></i> <span class="nav-text">Hoá đơn</span>
 						</a></li>
 						<!--Products-->
 						<li class="has-sub "><a class="sidenav-item-link"
 							href="/Web/admin/danh-sach-san-pham" aria-expanded="false"
-							style="cursor: pointer;"> <i class="mdi mdi-cart"></i> <span
-								class="nav-text">Quản lí sản phẩm</span>
+							style="cursor: pointer;"> <i
+								class="mdi mdi-cellphone"></i> <span class="nav-text">Sản
+									phẩm</span>
+						</a></li>
+						<li class="has-sub "><a class="sidenav-item-link"
+							href="/Web/admin/danh-sach-ma-khuyen-mai" aria-expanded="false"
+							style="cursor: pointer;"> <i
+								class="mdi mdi-paper-cut-vertical"></i> <span class="nav-text">Khuyến
+									mãi</span>
 						</a></li>
 						<!--Account-->
 						<li class="has-sub "><a class="sidenav-item-link"
-							data-toggle="collapse" data-target="#accountMenu"
-							aria-expanded="false" aria-controls="tables"
-							style="cursor: pointer;"> <i class="mdi mdi-account"></i> <span
-								class="nav-text">Quản lí tài khoản</span> <b class="caret"></b>
-						</a>
-
-							<ul class="collapse " id="accountMenu"
-								data-parent="#sidebar-menu">
-								<div class="sub-menu">
-									<li class=""><a class="sidenav-item-link"
-										href="#"> <span class="nav-text">
-												Cá nhân</span>
-									</a></li>
-									<li class=""><a class="sidenav-item-link"
-										href="/Web/admin/danh-sach-tai-khoan"> <span
-											class="nav-text"> Khách hàng</span>
-									</a></li>
-								</div>
-							</ul></li>
+							href="/Web/admin/danh-sach-tai-khoan" aria-expanded="false"
+							style="cursor: pointer;"> <i
+								class="mdi mdi-account"></i> <span class="nav-text">Tài
+									khoản</span>
+						</a></li>
 					</ul>
 				</div>
 
@@ -153,8 +150,9 @@
 																		<h4 class="title">Hoá đơn chờ duyệt</h4>
 																		<p class="last-msg font-size-14">${watingOrderAmount }
 																			hoá đơn</p>
-																		<a href="#" class="my-1 btn btn-sm btn-success">Đến
-																			trang hoá đơn</a>
+																		<a href="/Web/admin/danh-sach-hoa-don"
+																			class="my-1 btn btn-sm btn-success">Đến trang hoá
+																			đơn</a>
 																	</div>
 																</div>
 															</div></li>
@@ -174,8 +172,9 @@
 																		<h4 class="title">Hoá đơn mới</h4>
 																		<p class="last-msg font-size-14">${watingOrderAmountToday }
 																			hoá đơn</p>
-																		<a href="#" class="my-1 btn btn-sm btn-warning">Đến
-																			trang hoá đơn</a>
+																		<a href="/Web/admin/danh-sach-hoa-don"
+																			class="my-1 btn btn-sm btn-warning">Đến trang hoá
+																			đơn</a>
 																	</div>
 																</div>
 															</div></li>
@@ -203,11 +202,12 @@
 										</c:otherwise>
 									</c:choose>
 							</a>
-								<ul class="dropdown-menu dropdown-menu-right">
+								<ul class="dropdown-menu dropdown-menu-right"
+									style="overflow: hidden; text-overflow: ellipsis;">
 									<!-- User image -->
-									<li class="dropdown-header"><img
-										src="assets/img/user/user.png" class="img-circle"
-										alt="User Image" />
+									<li class="dropdown-header" x><img
+										style="width: 10%; height: 5vh" src="<c:url value="${sessionScope.UserSession.accInfor.avatar }"/>"
+										class="img-circle" alt="x" />
 										<div class="d-inline-block">
 											<c:choose>
 												<c:when
@@ -221,7 +221,7 @@
 											<small class="pt-1">${sessionScope.UserSession.accInfor.email }</small>
 										</div></li>
 
-									<li><a href="#"> <i class="mdi mdi-account"></i> Thông
+									<li><a href="/Web/trang-chu/trang-ca-nhan"> <i class="mdi mdi-account"></i> Thông
 											tin cá nhân
 									</a></li>
 									<li class="dropdown-footer"><a href="/Web/admin/log-out">
@@ -265,9 +265,9 @@
 												</tr>
 											</thead>
 
-											<tbody>
+											<tbody style="cursor: pointer;">
 												<c:forEach var="item" items="${lstOrder }">
-													<tr>
+													<tr onclick="submitForm('${item.id}')">
 														<td>${item.id }</td>
 														<td>${item.account.username }</td>
 														<td>${item.productHasColorHasBills.size() }</td>
@@ -286,6 +286,8 @@
 																	<a href="#" class="badge badge-danger">Đã Huỷ</a>
 																</c:otherwise>
 															</c:choose></td>
+														<form action="/Web/admin/danh-sach-hoa-don/${item.id }"
+															id="form-${item.id }"></form>
 													</tr>
 
 												</c:forEach>
@@ -322,6 +324,11 @@
 
 	<script src="<c:url value="/template/Admin/assets/js/sleek.js"/>"></script>
 
+	<script>
+		function submitForm(x) {
+			$("#form-" + x).submit();
+		}
+	</script>
 </body>
 </html>
 

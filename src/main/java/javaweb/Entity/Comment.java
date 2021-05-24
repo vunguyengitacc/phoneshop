@@ -2,9 +2,12 @@ package javaweb.Entity;
 // Generated Apr 27, 2021, 11:12:42 AM by Hibernate Tools 5.1.10.Final
 
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -28,8 +31,10 @@ public class Comment implements java.io.Serializable {
 	private Product product;
 	private String content;
 	private Date createDate;
+	private int status;
 
 	public Comment() {
+		this.status = 1;
 	}
 
 	public Comment(int id, Account account, Product product, String content) {
@@ -37,6 +42,7 @@ public class Comment implements java.io.Serializable {
 		this.account = account;
 		this.product = product;
 		this.content = content;
+		this.status = 1;
 	}
 
 	public Comment(int id, Account account, Product product, String content, Date createDate) {
@@ -45,10 +51,11 @@ public class Comment implements java.io.Serializable {
 		this.product = product;
 		this.content = content;
 		this.createDate = createDate;
+		this.status = 1;
 	}
 
 	@Id
-
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true, nullable = false)
 	public int getId() {
 		return this.id;
@@ -95,6 +102,15 @@ public class Comment implements java.io.Serializable {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	@Column(name = "STATUS", nullable = false)
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

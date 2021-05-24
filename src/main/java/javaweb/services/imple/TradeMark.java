@@ -2,24 +2,30 @@ package javaweb.services.imple;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javaweb.Entity.Trademark;
 
 @Service("TradeMark")
-public class TradeMark implements javaweb.services.inter.TradeMark{
-	DBContext factory = new DBContext();
+public class TradeMark implements javaweb.services.inter.TradeMark {
+	@Autowired
+	DBContext factory;
 
 	@Override
 	public List<Trademark> getAll() {
 		Session ss = factory.getSession();
 		ss.beginTransaction();
-		List rs = ss.createQuery("FROM Trademark").list();
+		List rs = ss.createCriteria(Trademark.class).setFetchMode("products", FetchMode.JOIN)
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 		ss.close();
 		return rs;
 	}
+
 	@Override
 	public Trademark getByID(int ID) {
 		Session ss = factory.getSession();
@@ -28,12 +34,14 @@ public class TradeMark implements javaweb.services.inter.TradeMark{
 		ss.close();
 		return rs;
 	}
+
 	@Override
 	public Trademark postNew(String name) {
 		Session ss = factory.getSession();
 		ss.beginTransaction();
-		Trademark temp = (Trademark) ss.createCriteria(Trademark.class).add(Restrictions.eq("name", name)).uniqueResult();
-		if(temp!=null)
+		Trademark temp = (Trademark) ss.createCriteria(Trademark.class).add(Restrictions.eq("name", name))
+				.uniqueResult();
+		if (temp != null)
 			return temp;
 		temp = new Trademark();
 		temp.setName(name);

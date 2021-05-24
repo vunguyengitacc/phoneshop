@@ -46,23 +46,30 @@
 </head>
 
 <body>
+
+	<c:if test="${sessionScope.UserSession.accInfor.type == 0 }">
+		<div id="feedback">
+			<a href="/Web/admin/quan-li-chung"><i class="fas fa-user-cog"></i>Trang
+				admin</a>
+		</div>
+	</c:if>
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="header-top">
 			<div class="container">
 				<div class="ht-left">
 					<div class="mail-service">
-						<i class=" fa fa-envelope"></i> lvshop@gmail.com
+						<i class=" fa fa-envelope"></i> ${shopInfor.email }
 					</div>
 					<div class="phone-service">
-						<i class=" fa fa-phone"></i> +84 00.000.000
+						<i class=" fa fa-phone"></i> ${shopInfor.phone }
 					</div>
 				</div>
 				<div class="ht-right">
 					<c:choose>
 						<c:when test="${sessionScope.UserSession == null }">
-							<a href="#" class="login-panel"><i class="fa fa-user"></i>Đăng
-								nhập</a>
+							<a href="/Web/login" class="login-panel"><i
+								class="fa fa-user"></i>Đăng nhập</a>
 						</c:when>
 						<c:otherwise>
 							<a href="/Web/trang-chu/trang-ca-nhan" class="login-panel"><i
@@ -77,7 +84,8 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo">
-							<a href="/Web/trang-chu/"> LV SHOP </a>
+							<a href="/Web/trang-chu/" style="font-size: 1.4rem;"> LV SHOP
+							</a>
 						</div>
 					</div>
 					<div class="col-lg-7 col-md-7">
@@ -86,6 +94,7 @@
 							<form class="input-group" action="/Web/trang-chu/san-pham">
 								<input type="hidden" value="1" name="trang"> <input
 									type="hidden" value="" name="thuongHieu"> <input
+									type="hidden" value="1" name="sapXep"><input
 									type="text" placeholder="Bạn muốn tìm gì?" name="timKiem">
 								<button type="button">
 									<i class="ti-search"></i>
@@ -110,8 +119,10 @@
 					<ul>
 						<li class="active"><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
 						<li><a
-							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=">SHOP</a></li>
-						<li><a href="./contact.html">LIÊN HỆ</a></li>
+							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=&sapXep=1">SHOP</a></li>
+						<li><a href="/Web/trang-chu/lien-he">LIÊN HỆ</a></li>
+						<li><a href="/Web/trang-chu/ma-giam-gia?trang=1&sapXep=1">KHUYẾN
+								MÃI</a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -156,7 +167,7 @@
 			</c:when>
 			<c:otherwise>
 				<div class="swal2-icon swal2-error swal2-animate-error-icon"
-					style="display: flex;margin-top: 20vh; margin-bottom: 20vh">
+					style="display: flex; margin-top: 20vh; margin-bottom: 20vh">
 					<span class="swal2-x-mark"><span
 						class="swal2-x-mark-line-left"></span><span
 						class="swal2-x-mark-line-right"></span></span>
@@ -171,12 +182,12 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#">LV Shop</a>
+							<a href="#" style="font-size: 1.5rem; color: white;">LV Shop</a>
 						</div>
 						<ul>
-							<li>Địa chỉ: Khu công nghệ cao quận 9, Tp. Hồ Chí Minh</li>
-							<li>SĐT: +84 00.000.000</li>
-							<li>Email: lvshop@gmail.com</li>
+							<li>Địa chỉ: ${shopInfor.address }</li>
+							<li>SĐT: ${shopInfor.phone }</li>
+							<li>Email: ${shopInfor.email }</li>
 						</ul>
 						<div class="footer-social">
 							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
@@ -188,10 +199,12 @@
 				</div>
 				<div class="col-lg-2 offset-lg-1">
 					<div class="footer-widget">
-						<h5>Về chúng tôi</h5>
+						<h5>Shop</h5>
 						<ul>
-							<li><a href="#">Chính sách</a></li>
-							<li><a href="#">Liên hệ</a></li>
+							<li><a
+								href="/Web/trang-chu/san-pham?timKiem=&thuongHieu=&sapXep=1&trang=1">Sản
+									phẩm</a></li>
+							<li><a href="/Web/trang-chu/lien-he">Liên hệ</a></li>
 						</ul>
 					</div>
 				</div>
@@ -199,16 +212,15 @@
 					<div class="footer-widget">
 						<h5>Tài khoản</h5>
 						<ul>
-							<li><a href="#">Thông tin</a></li>
-							<li><a href="#">Giỏ hàng</a></li>
+							<li><a href="/Web/trang-chu/trang-ca-nhan">Thông tin</a></li>
+							<li><a href="/Web/trang-chu/gio-hang">Giỏ hàng</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="newslatter-item">
 						<h5>Phản hồi với chúng tôi</h5>
-						<a href="#">Gửi email để chúng tôi có thể tiếp nhận ý kiến của
-							bạn.</a>
+						<p>Gửi email để chúng tôi có thể tiếp nhận ý kiến của bạn</p>
 					</div>
 				</div>
 			</div>

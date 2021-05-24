@@ -48,7 +48,7 @@
 			<div id="sidebar" class="sidebar sidebar-with-footer">
 				<!-- Aplication Brand -->
 				<div class="app-brand">
-					<a href="/Web/admin/general" title="Sleek Dashboard"> <span
+					<a href="/Web/trang-chu/" title="Sleek Dashboard"> <span
 						class="brand-name text-truncate">LV Shop</span>
 					</a>
 				</div>
@@ -59,8 +59,9 @@
 					<ul class="nav sidebar-inner" id="sidebar-menu">
 
 
-						<li class="has-sub "><a class="sidenav-item-link" href="#"
-							aria-expanded="false" style="cursor: pointer;"> <i
+						<li class="has-sub "><a class="sidenav-item-link"
+							href="/Web/admin/quan-li-chung" aria-expanded="false"
+							style="cursor: pointer;"> <i
 								class="mdi mdi-pencil-box-multiple"></i> <span class="nav-text">Quản
 									lí chung</span>
 						</a></li>
@@ -68,35 +69,26 @@
 						<li class="has-sub "><a class="sidenav-item-link"
 							href="/Web/admin/danh-sach-hoa-don" aria-expanded="false"
 							style="cursor: pointer;"> <i class="mdi mdi-cart"></i> <span
-								class="nav-text">Quản lí hoá đơn</span>
+								class="nav-text">Hoá đơn</span>
 						</a></li>
 						<!--Products-->
 						<li class="has-sub "><a class="sidenav-item-link"
-							href="/Web/admin/danh-sach-san-pham" aria-expanded="false"
-							style="cursor: pointer;"> <i class="mdi mdi-cart"></i> <span
-								class="nav-text">Quản lí sản phẩm</span>
+							href="/Web/admin/danh-sach-san-pham"  style="color: white; font-size: 1.005rem" aria-expanded="false"
+							style="cursor: pointer;"> <i class="mdi mdi-cellphone"></i> <span
+								class="nav-text">Sản phẩm</span>
+						</a></li>
+						<li class="has-sub "><a class="sidenav-item-link"
+							href="/Web/admin/danh-sach-ma-khuyen-mai" aria-expanded="false"
+							style="cursor: pointer;"> <i
+								class="mdi mdi-paper-cut-vertical"></i> <span class="nav-text">Khuyến
+									mãi</span>
 						</a></li>
 						<!--Account-->
 						<li class="has-sub "><a class="sidenav-item-link"
-							data-toggle="collapse" data-target="#accountMenu"
-							aria-expanded="false" aria-controls="tables"
+							href="/Web/admin/danh-sach-tai-khoan" aria-expanded="false"
 							style="cursor: pointer;"> <i class="mdi mdi-account"></i> <span
-								class="nav-text">Quản lí tài khoản</span> <b class="caret"></b>
-						</a>
-
-							<ul class="collapse " id="accountMenu"
-								data-parent="#sidebar-menu">
-								<div class="sub-menu">
-									<li><a class="sidenav-item-link" href="#"> <span
-											class="nav-text"> Cá nhân</span>
-									</a></li>
-									<li class=""><a class="sidenav-item-link"
-										href="/Web/admin/danh-sach-tai-khoan"> <span
-											class="nav-text"> Khách hàng</span>
-									</a></li>
-								</div>
-							</ul></li>
-
+								class="nav-text">Tài khoản</span>
+						</a></li>
 					</ul>
 				</div>
 
@@ -154,8 +146,9 @@
 																		<h4 class="title">Hoá đơn chờ duyệt</h4>
 																		<p class="last-msg font-size-14">${watingOrderAmount }
 																			hoá đơn</p>
-																		<a href="#" class="my-1 btn btn-sm btn-success">Đến
-																			trang hoá đơn</a>
+																		<a href="/Web/admin/danh-sach-hoa-don"
+																			class="my-1 btn btn-sm btn-success">Đến trang hoá
+																			đơn</a>
 																	</div>
 																</div>
 															</div></li>
@@ -175,8 +168,9 @@
 																		<h4 class="title">Hoá đơn mới</h4>
 																		<p class="last-msg font-size-14">${watingOrderAmountToday }
 																			hoá đơn</p>
-																		<a href="#" class="my-1 btn btn-sm btn-warning">Đến
-																			trang hoá đơn</a>
+																		<a href="/Web/admin/danh-sach-hoa-don"
+																			class="my-1 btn btn-sm btn-warning">Đến trang hoá
+																			đơn</a>
 																	</div>
 																</div>
 															</div></li>
@@ -204,11 +198,12 @@
 										</c:otherwise>
 									</c:choose>
 							</a>
-								<ul class="dropdown-menu dropdown-menu-right">
+								<ul class="dropdown-menu dropdown-menu-right"
+									style="overflow: hidden; text-overflow: ellipsis;">
 									<!-- User image -->
 									<li class="dropdown-header"><img
-										src="assets/img/user/user.png" class="img-circle"
-										alt="User Image" />
+										style="width: 10%; height: 5vh" src="<c:url value="${sessionScope.UserSession.accInfor.avatar }"/>"
+										class="img-circle" alt="x" />
 										<div class="d-inline-block">
 											<c:choose>
 												<c:when
@@ -222,8 +217,8 @@
 											<small class="pt-1">${sessionScope.UserSession.accInfor.email }</small>
 										</div></li>
 
-									<li><a href="#"> <i class="mdi mdi-account"></i> Thông
-											tin cá nhân
+									<li><a href="/Web/trang-chu/trang-ca-nhan"> <i
+											class="mdi mdi-account"></i> Thông tin cá nhân
 									</a></li>
 									<li class="dropdown-footer"><a href="/Web/admin/log-out">
 											<i class="mdi mdi-logout"></i> Đăng xuất
@@ -239,7 +234,9 @@
           ——— CONTENT WRAPPER
           ===================================== -->
 			<div class="content-wrapper">
-				<form id="productDetailForm" method="post">
+				<form id="productDetailForm"
+					method="POST"
+					enctype="multipart/form-data">
 
 					<div class="content">
 						<div class="row">
@@ -252,14 +249,14 @@
 									<div class="row">
 										<div class="card-body col-lg-6">
 											<div class="form-group" style="margin-top: 15%;">
-												<label>Ảnh</label>
-												<div class="custom-file mb-1 input-group">
+												<label>Thêm ảnh</label>
+												<div class="input-group">
 													<input type="file" class="custom-file-input"
-														id="coverImage" required> <label
-														class="custom-file-label" for="coverImage">Chọn
-														ảnh...</label>
-													<div class="invalid-feedback">Example invalid custom
-														file feedback</div>
+														onchange="checkContent()" id="coverImage" required
+														name="anhMinhHoa"
+														accept="image/x-png,image/gif,image/jpeg"> <label
+														class="custom-file-label" id="labelCoverImage"
+														for="coverImage">Chọn ảnh...</label>
 												</div>
 											</div>
 										</div>
@@ -267,11 +264,13 @@
 											<div class="input-group d-flex justify-content-center">
 												<c:choose>
 													<c:when test="${productDetail.image!='' }">
-														<img src="<c:url value="${productDetail.image }"/>"
+														<img id="contentCoverImage"
+															src="<c:url value="${productDetail.image }"/>"
 															style="height: 35vh;" />
 													</c:when>
 													<c:otherwise>
-														<img src="<c:url value="/resources/default.png"/>"
+														<img id="contentCoverImage"
+															src="<c:url value="/resources/default.png"/>"
 															style="height: 35vh;" />
 													</c:otherwise>
 												</c:choose>
@@ -281,8 +280,8 @@
 
 								</div>
 							</div>
-							<div class="col-lg-6">
-								<div class="card card-default">
+							<div class="col-lg-6" style="margin-bottom: 1.5rem;">
+								<div class="card card-default" style="height: 100%;">
 									<div class="card-header card-header-border-bottom">
 										<h2>Thông tin chung</h2>
 									</div>
@@ -304,7 +303,7 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label>Giá gốc</label>
+											<label>Giá gốc <span style="color: red">*</span></label>
 											<div class="input-group">
 												<input type="text" class="form-control" required
 													name="giaGoc" value="${productDetail.originalPrice }"
@@ -313,7 +312,7 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label>Giá bán</label>
+											<label>Giá bán <span style="color: red">*</span></label>
 											<div class="input-group">
 												<input type="text" class="form-control" required
 													name="giaBan" value="${productDetail.price }"
@@ -322,7 +321,7 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label>Giá khuyến mãi</label>
+											<label>Giá khuyến mãi <span style="color: red">*</span></label>
 											<div class="input-group">
 												<input type="text" class="form-control" required
 													name="giaKhuyenMai"
@@ -445,7 +444,7 @@
 									</div>
 									<div class="card-body">
 										<div class="form-group">
-											<label>RAM</label>
+											<label>RAM <span style="color: red">*</span></label>
 											<div class="input-group">
 												<input type="text" class="form-control"
 													value="${productDetail.ram }" name="ram"
@@ -455,7 +454,7 @@
 										</div>
 
 										<div class="form-group">
-											<label>ROM</label>
+											<label>ROM <span style="color: red">*</span></label>
 											<div class="input-group">
 												<input type="text" class="form-control"
 													value="${productDetail.rom }" name="rom"
@@ -464,7 +463,7 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label>Kích cỡ màn hình</label>
+											<label>Kích cỡ màn hình <span style="color: red">*</span></label>
 											<div class="input-group">
 												<input type="text" class="form-control"
 													value="${productDetail.screenSize }" name="kichCoManHinh"
@@ -510,7 +509,7 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label>Dung lượng pin</label>
+											<label>Dung lượng pin <span style="color: red">*</span></label>
 											<div class="input-group">
 												<input type="number" class="form-control"
 													value="${productDetail.batteryCapacity }" name="pin"
@@ -519,7 +518,7 @@
 											</div>
 										</div>
 										<div class="form-group">
-											<label>Số sim</label>
+											<label>Thông tin sim</label>
 											<div class="input-group">
 												<input type="text" class="form-control"
 													value="${productDetail.sim }" name="sim">
@@ -606,6 +605,7 @@
 	<script
 		src="<c:url value="/template/Admin/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
 	<script src="<c:url value="/template/Admin/assets/js/sleek.js"/>"></script>
+
 	<script type="text/javascript">
 		function changeAmountHandler(x) {
 			var lstValue = x.split('|');
@@ -712,43 +712,8 @@
 				$("#modalCart").modal('show');
 				return;
 			}
-			$.ajax({
-				url: "/Web/admin/api/san-pham?"+$("#productDetailForm").serialize(),
-				type: 'POST',
-				success:(response)=>{
-					var objJson = JSON.parse(response);
-					if(objJson.status == 1){
-						$("#contentForCartAction").html("Thêm thành công");
-						$("#modalCart").modal('show');
-						setTimeout(()=>combackPage(),1000);
-					}
-					else if(objJson.status == 2){
-						$("#contentForCartAction").html("Thêm thất bại");
-						$("#modalCart").modal('show');
-						
-					}
-					else if(objJson.status == 3){
-						$("#contentForCartAction").html("Lỗi! Bạn chưa đăng nhập");
-						$("#modalCart").modal('show');
-						setTimeout(()=>combackPage(),1000);
-					}
-					else if(objJson.status == 4){
-						$("#contentForCartAction").html("Có vẻ bạn đang nhập sai định dạng input! Vui lòng kiểm tra lại");
-						$("#modalCart").modal('show');
-					}
-					else{
-						$("#contentForCartAction").html("Cập nhật thành công");
-						$("#modalCart").modal('show');
-						console.log(objJson);
-					}
-				},
-				error:(error)=>{
-					$("#contentForCartAction").html("Đã xảy ra lỗi");
-					$("#modalCart").modal('show');
-					console.log(error)
-					return;
-				}
-			})			
+			$("#productDetailForm").attr("action","/Web/admin/danh-sach-san-pham/chi-tiet-san-pham/them");
+			$("#productDetailForm").submit();
 		}
 		
 		function updateSubmit(){
@@ -758,37 +723,8 @@
 				$("#modalCart").modal('show');
 				return;
 			}
-			$.ajax({
-				url: "/Web/admin/api/san-pham?"+$("#productDetailForm").serialize(),
-				type: 'PUT',
-				success:(response)=>{
-					var objJson = JSON.parse(response);
-					if(objJson.status == 1){
-						$("#contentForCartAction").html("Cập nhật thành công");
-						$("#modalCart").modal('show');
-						setTimeout(()=>combackPage(),1000);
-					}
-					else if(objJson.status == 2){
-						$("#contentForCartAction").html("Cập nhật thất bại");
-						$("#modalCart").modal('show');
-						
-					}
-					else if(objJson.status == 3){
-						$("#contentForCartAction").html("Lỗi! Bạn chưa đăng nhập");
-						$("#modalCart").modal('show');
-						setTimeout(()=>combackPage(),1000);
-					}
-					else if(objJson.status == 4){
-						$("#contentForCartAction").html("Có vẻ bạn đang nhập sai định dạng input! Vui lòng kiểm tra lại");
-						$("#modalCart").modal('show');
-					}
-				},
-				error:(error)=>{
-					$("#contentForCartAction").html("Đã xảy ra lỗi");
-					$("#modalCart").modal('show');
-					return;
-				}
-			})			
+			$("#productDetailForm").attr("action","/Web/admin/danh-sach-san-pham/chi-tiet-san-pham/cap-nhat");
+			$("#productDetailForm").submit();
 		}
 		
 		function deleteSubmit(){
@@ -814,13 +750,18 @@
 					}
 				},
 				error:(error)=>{
-					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#contentForCartAction").html("Lỗi đường truyền");
 					$("#modalCart").modal('show');
 					return;
 				}
 			})			
 		}
-
+		
+		
+		function checkContent() {
+			var x = $("#coverImage");
+			$("#labelCoverImage").html(x.val());
+		}
 	</script>
 </body>
 </html>

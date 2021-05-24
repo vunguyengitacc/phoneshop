@@ -2,6 +2,7 @@ package javaweb.services.imple;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.hibernate.Criteria;
@@ -25,10 +26,11 @@ public class Bill implements javaweb.services.inter.Bill {
 	javaweb.services.inter.Commune commnue;
 	@Autowired
 	ProductHasColorHasBill detail;
-	DBContext factory = new DBContext();
+	@Autowired
+	DBContext factory;
 
 	@Override
-	public int postBill(Account acc, int comm, BigDecimal totalValue, int promo) {
+	public int postBill(Account acc, int comm, BigDecimal totalValue, String promo) {
 		Session ss = factory.getSession();
 		ss.beginTransaction();
 		javaweb.Entity.Bill newBill = new javaweb.Entity.Bill();
@@ -69,9 +71,8 @@ public class Bill implements javaweb.services.inter.Bill {
 		Session ss = factory.getSession();
 		ss.beginTransaction();
 		@SuppressWarnings("rawtypes")
-		List rs = ss.createCriteria(javaweb.Entity.Bill.class).list();
-		if (rs.size() == 0)
-			return null;
+		List rs = ss.createCriteria(javaweb.Entity.Bill.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
+				.list();
 		return rs;
 	}
 
@@ -84,10 +85,67 @@ public class Bill implements javaweb.services.inter.Bill {
 				.setFetchMode("commune.ward", FetchMode.JOIN).setFetchMode("commune.ward.district", FetchMode.JOIN)
 				.setFetchMode("productHasColorHasBills", FetchMode.JOIN)
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-		if (rs.size() == 0)
-			return null;
 		return rs;
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<javaweb.Entity.Bill> getAllAdvance(HashMap<String, String> lstInput, List<String> lstField) {
+		Session ss = factory.getSession();
+		ss.beginTransaction();
+		Criteria query = ss.createCriteria(javaweb.Entity.Bill.class);
+		lstInput.forEach((key, value) -> query.add(Restrictions.eq(key, value)));
+		lstField.forEach((item) -> query.setFetchMode(item, FetchMode.JOIN));
+		query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<javaweb.Entity.Bill> rs = query.list();
+		ss.close();
+		return rs;
+	}
+
+	@Override
+	public boolean deleteByID(int billID) {
+		Session ss = factory.getSession();
+		ss.beginTransaction();
+		javaweb.Entity.Bill rs = (javaweb.Entity.Bill) ss.createCriteria(javaweb.Entity.Bill.class)
+				.add(Restrictions.eq("id", billID)).setFetchMode("productHasColorHasBill", FetchMode.JOIN)
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).uniqueResult();
+		if (rs == null)
+			return false;
+		if (rs.getProductHasColorHasBills().size() != 0)
+			return false;
+		ss.delete(rs);
+		ss.getTransaction().commit();
+		ss.close();
+		return true;
+	}
+
+	@Override
+	public boolean putStatusByID(int billID) {
+		Session ss = factory.getSession();
+		ss.beginTransaction();
+		javaweb.Entity.Bill rs = (javaweb.Entity.Bill) ss.createCriteria(javaweb.Entity.Bill.class)
+				.add(Restrictions.eq("id", billID)).setFetchMode("productHasColorHasBill", FetchMode.JOIN)
+				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).uniqueResult();
+		if (rs == null)
+			return false;
+		rs.setStatus(0);
+		ss.update(rs);
+		ss.getTransaction().commit();
+		ss.close();
+		return true;
+	}
+
+	@Override
+	public javaweb.Entity.Bill getByIdAdvance(int id, List<String> lstField) {
+		Session ss = factory.getSession();
+		ss.beginTransaction();
+		Criteria query = ss.createCriteria(javaweb.Entity.Bill.class).add(Restrictions.eq("id", id));
+		lstField.forEach((item)->query.setFetchMode(item, FetchMode.JOIN));
+		query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		javaweb.Entity.Bill rs = (javaweb.Entity.Bill) query.uniqueResult();
+		ss.close();
+		return rs;
 	}
 
 }

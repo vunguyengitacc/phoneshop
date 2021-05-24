@@ -17,7 +17,8 @@ import javaweb.services.inter.Product;
 @Service("ProductHasColor")
 public class ProductHasColor implements javaweb.services.inter.ProductHasColor {
 
-	DBContext factory = new DBContext();
+	@Autowired
+	DBContext factory;
 	@Autowired
 	Color col;
 	@Autowired

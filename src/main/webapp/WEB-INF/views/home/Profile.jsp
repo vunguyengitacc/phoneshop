@@ -45,27 +45,61 @@
 	href="<c:url value="/template/Home/css/style.css"/>" type="text/css">
 </head>
 
+<style>
+.log-out-choice:hover {
+	background: red;
+}
+</style>
 <body id="bodyHTML">
+
+
+	<c:if test="${message != null }">
+		<!-- Modal Add Cart	Start-->
+		<div class="modal fade" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+			id="modalCart">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" id="contentForCartAction">${message }</div>
+				</div>
+			</div>
+		</div>
+		<!-- Modal Add Cart	End-->
+	</c:if>
+	<c:if test="${sessionScope.UserSession.accInfor.type == 0 }">
+		<div id="feedback">
+			<a href="/Web/admin/quan-li-chung"><i class="fas fa-user-cog"></i>Trang
+				admin</a>
+		</div>
+	</c:if>
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="header-top">
 			<div class="container">
 				<div class="ht-left">
 					<div class="mail-service">
-						<i class=" fa fa-envelope"></i> lvshop@gmail.com
+						<i class=" fa fa-envelope"></i> ${shopInfor.email }
 					</div>
 					<div class="phone-service">
-						<i class=" fa fa-phone"></i> +84 00.000.000
+						<i class=" fa fa-phone"></i> ${shopInfor.phone }
 					</div>
 				</div>
 				<div class="ht-right">
 					<c:choose>
 						<c:when test="${sessionScope.UserSession == null }">
-							<a href="#" class="login-panel"><i class="fa fa-user"></i>Đăng
-								nhập</a>
+							<a href="/Web/login" class="login-panel"><i
+								class="fa fa-user"></i>Đăng nhập</a>
 						</c:when>
 						<c:otherwise>
-							<a href="#" class="login-panel"><i class="fa fa-user"></i>${sessionScope.UserSession.accInfor.username }</a>
+							<a href="/Web/trang-chu/trang-ca-nhan" class="login-panel"><i
+								class="fa fa-user"></i>${sessionScope.UserSession.accInfor.username }</a>
 						</c:otherwise>
 					</c:choose>
 				</div>
@@ -76,7 +110,8 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo">
-							<a href="/Web/trang-chu/"> LV SHOP </a>
+							<a href="/Web/trang-chu/" style="font-size: 1.4rem;"> LV SHOP
+							</a>
 						</div>
 					</div>
 					<div class="col-lg-7 col-md-7">
@@ -85,6 +120,7 @@
 							<form class="input-group" action="/Web/trang-chu/san-pham">
 								<input type="hidden" value="1" name="trang"> <input
 									type="hidden" value="" name="thuongHieu"> <input
+									type="hidden" value="1" name="sapXep"><input
 									type="text" placeholder="Bạn muốn tìm gì?" name="timKiem">
 								<button type="submit">
 									<i class="ti-search"></i>
@@ -109,8 +145,10 @@
 					<ul>
 						<li class="active"><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
 						<li><a
-							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=">SHOP</a></li>
-						<li><a href="./contact.html">LIÊN HỆ</a></li>
+							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=&sapXep=1">SHOP</a></li>
+						<li><a href="/Web/trang-chu/lien-he">LIÊN HỆ</a></li>
+						<li><a href="/Web/trang-chu/ma-giam-gia?trang=1&sapXep=1">KHUYẾN
+								MÃI</a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -167,7 +205,21 @@
 									stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 									class="feather feather-credit-card mr-2">
 								<rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
-								<line x1="1" y1="10" x2="23" y2="10"></line></svg>Lịch sử mua hàng
+								<line x1="1" y1="10" x2="23" y2="10"></line></svg>Lịch sử mua hàng <a
+								href="/Web/admin/log-out"
+								class="nav-link has-icon nav-link-faded log-out-choice"> <svg
+										xmlns="http://www.w3.org/2000/svg"
+										xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+										focusable="false" width="24" height="24" viewBox="0 0 24 24"
+										fill="none"
+										style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
+										class="feather feather-log-out mr-2"
+										preserveAspectRatio="xMidYMid meet">
+										<g fill="none" stroke="#626262" stroke-width="2"
+											stroke-linecap="round" stroke-linejoin="round">
+										<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+										<path d="M16 17l5-5l-5-5" />
+										<path d="M21 12H9" /></g></svg>Đăng xuất
 							</a>
 						</nav>
 					</div>
@@ -204,12 +256,69 @@
 										stroke-linejoin="round" class="feather feather-credit-card">
 									<rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
 									<line x1="1" y1="10" x2="23" y2="10"></line></svg></a></li>
+							<a href="https://iconify.design/icon-sets/feather/log-out.html"
+								class="nav-link has-icon nav-link-faded log-out-choice"> <svg
+									xmlns="http://www.w3.org/2000/svg"
+									xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
+									focusable="false" width="24" height="24" viewBox="0 0 24 24"
+									fill="none"
+									style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); transform: rotate(360deg);"
+									class="feather feather-log-out mr-2 "
+									preserveAspectRatio="xMidYMid meet">
+									<g fill="none" stroke="#626262" stroke-width="2"
+										stroke-linecap="round" stroke-linejoin="round">
+									<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+									<path d="M16 17l5-5l-5-5" />
+									<path d="M21 12H9" /></g></svg>Đăng xuất
+							</a>
 						</ul>
 					</div>
 					<div class="card-body tab-content">
 
 						<!-- Profile -->
 						<div class="tab-pane active" id="profile">
+							<h3>Ảnh đại diện</h3>
+							<hr>
+							<form action="/Web/trang-chu/trang-ca-nhan/cap-nhat-anh"
+								method="post" enctype="multipart/form-data">
+								<div class="form-group row mb-6">
+
+									<div class="col-lg-6 d-flex" style="padding-top: 10%;">
+										<div class="custom-file mb-1">
+											<input type="file" class="custom-file-input" id="coverImage"
+												name="avatar" required> <label
+												class="custom-file-label" for="coverImage">Chọn
+												ảnh...</label>
+											<div class="invalid-feedback">Example invalid custom
+												file feedback</div>
+
+										</div>
+									</div>
+
+									<div class="col-lg-4 offset-lg-1">
+										<c:choose>
+											<c:when
+												test="${sessionScope.UserSession.accInfor.avatar != '' }">
+												<img
+													src="<c:url value="${sessionScope.UserSession.accInfor.avatar }"/>">
+											</c:when>
+											<c:otherwise>
+												<img src="<c:url value="/resources/user/temp-avatar.png"/>">
+											</c:otherwise>
+										</c:choose>
+
+
+									</div>
+									<div class="col-lg-12  mt-3">
+
+										<button type="submit" class=" btn primary-btn">Cập
+											nhật</button>
+
+									</div>
+
+								</div>
+
+							</form>
 							<h3>Thông tin tài khoản</h3>
 							<hr>
 							<div>
@@ -226,13 +335,17 @@
 									<label for="url">Email</label> <input type="text"
 										class="form-control" id="email"
 										placeholder="Chúng tôi có thể liên lạc cho bạn lúc cần"
-										value="${sessionScope.UserSession.accInfor.email }">
+										value="${sessionScope.UserSession.accInfor.email }"
+										data-toggle="tooltip" data-placement="top"
+										title="Nên nhập dạng a...z@gmail.com">
 								</div>
 								<div class="form-group">
 									<label for="location">Số điện thoại </label> <input type="text"
 										class="form-control" id="phoneNumber"
 										placeholder="Nhập số điện thoại"
-										value="${sessionScope.UserSession.accInfor.phone }">
+										value="${sessionScope.UserSession.accInfor.phone }"
+										data-toggle="tooltip" data-placement="top"
+										title="Chỉ nên nhập một chuỗi số">
 								</div>
 								<div class="form-group">
 									<label for="location">Giới tính</label> <select
@@ -242,8 +355,16 @@
 												test="${sessionScope.UserSession.accInfor.gender == '1' }">
 												<option value="1">Nam</option>
 												<option value="2">Nữ</option>
+												<option value="3">Khác</option>
+											</c:when>
+											<c:when
+												test="${sessionScope.UserSession.accInfor.gender == '2' }">
+												<option value="1">Nam</option>
+												<option value="2">Nữ</option>
+												<option value="3">Khác</option>
 											</c:when>
 											<c:otherwise>
+												<option value="3">Khác</option>
 												<option value="2">Nữ</option>
 												<option value="1">Nam</option>
 											</c:otherwise>
@@ -251,9 +372,9 @@
 									</select>
 								</div>
 								<hr>
-								<button type="button" class="btn btn-primary"
+								<button type="button" class="btn primary-btn"
 									onclick="updateAccountHandler()">Cập nhật</button>
-								<a href="/Web/trang-chu/trang-ca-nhan" class="btn btn-light">Huỷ</a>
+								<a href="/Web/trang-chu/trang-ca-nhan" class="btn light-btn">Huỷ</a>
 							</div>
 						</div>
 						<!-- Profile -->
@@ -277,7 +398,7 @@
 										thay đổi mật khẩu thành công, vui lòng đăng nhập lại.</small>
 								</div>
 								<hr>
-								<button class="btn btn-primary" onclick="changePassHandler()">Lưu</button>
+								<button class="btn primary-btn" onclick="changePassHandler()">Lưu</button>
 							</div>
 						</div>
 						<!-- Change Pass -->
@@ -287,12 +408,37 @@
 							<h3>Lịch sử mua hàng</h3>
 							<hr>
 							<div>
-								<div class="form-group mb-0">
-									<div
-										class="border border-gray-500 bg-gray-200 p-3 text-center font-size-sm">Bạn
-										chưa từng thực hiện bất cứ đơn hàng nào.</div>
+								<div class="container mt-1"
+									style="height: 85vh; overflow-y: scroll;">
+									<div class="row">
+										<div class="col-md-10 offset-md-1">
+											<ul class="timeline">
+												<c:forEach var="item" items="${lstBills }">
+													<c:choose>
+														<c:when test="${item.promotion!=null }">
+															<li><a href="#">MÃ GIAO DỊCH: ${item.id }</a> <a
+																href="#" class="float-right">${item.createDate }</a>
+																<p>
+																	<u>mã giảm giá: ${item.promotion.id }</u>
+																<h3>${item.totalValue }VNĐ</h3>
+																</p></li>
+														</c:when>
+														<c:otherwise>
+															<li><a href="#">MÃ GIAO DỊCH: ${item.id }</a> <a
+																href="#" class="float-right">${item.createDate }</a>
+																<p>
+																	<br>
+																<h3>${item.totalValue }VNĐ</h3>
+																</p></li>
+														</c:otherwise>
+													</c:choose>
+												</c:forEach>
+											</ul>
+										</div>
+									</div>
 								</div>
 							</div>
+
 						</div>
 						<!--Bill History-->
 
@@ -330,12 +476,12 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="/Web/trang-chu">LV Shop</a>
+							<a href="#" style="font-size: 1.5rem; color: white;">LV Shop</a>
 						</div>
 						<ul>
-							<li>Địa chỉ: Khu công nghệ cao quận 9, Tp. Hồ Chí Minh</li>
-							<li>SĐT: +84 00.000.000</li>
-							<li>Email: lvshop@gmail.com</li>
+							<li>Địa chỉ: ${shopInfor.address }</li>
+							<li>SĐT: ${shopInfor.phone }</li>
+							<li>Email: ${shopInfor.email }</li>
 						</ul>
 						<div class="footer-social">
 							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
@@ -347,10 +493,12 @@
 				</div>
 				<div class="col-lg-2 offset-lg-1">
 					<div class="footer-widget">
-						<h5>Về chúng tôi</h5>
+						<h5>Shop</h5>
 						<ul>
-							<li><a href="#">Chính sách</a></li>
-							<li><a href="#">Liên hệ</a></li>
+							<li><a
+								href="/Web/trang-chu/san-pham?timKiem=&thuongHieu=&sapXep=1&trang=1">Sản
+									phẩm</a></li>
+							<li><a href="/Web/trang-chu/lien-he">Liên hệ</a></li>
 						</ul>
 					</div>
 				</div>
@@ -358,16 +506,15 @@
 					<div class="footer-widget">
 						<h5>Tài khoản</h5>
 						<ul>
-							<li><a href="#">Thông tin</a></li>
-							<li><a href="#">Giỏ hàng</a></li>
+							<li><a href="/Web/trang-chu/trang-ca-nhan">Thông tin</a></li>
+							<li><a href="/Web/trang-chu/gio-hang">Giỏ hàng</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="newslatter-item">
 						<h5>Phản hồi với chúng tôi</h5>
-						<a href="#">Gửi email để chúng tôi có thể tiếp nhận ý kiến của
-							bạn.</a>
+						<p>Gửi email để chúng tôi có thể tiếp nhận ý kiến của bạn</p>
 					</div>
 				</div>
 			</div>
@@ -396,9 +543,9 @@
 			var b = $("#email");
 			var c = $("#phoneNumber");
 			var d = $("#gender");
-			var reGexForEmail = /^[a-zA-Z]+@gmail.com$/g;
-			var reGexForPhone = /^(0|\+84)[0-9]{9}$/g;
-			if(!reGexForEmail.test(b.val())||!reGexForPhone.test(c.val())){
+			var regexForEmail = /^[a-zA-Z0-9.]+@(gmail|[a-zA-z]+).com$/g;
+			var regexForPhone = /^(0|\+84)[0-9]{9}$/g;
+			if(!regexForEmail.test(b.val())||!regexForPhone.test(c.val())){
 				$("#contentForCartAction").html("Vui lòng nhập đúng định dạng");
 				$("#modalCart").modal('show');
 				return;
@@ -412,15 +559,17 @@
 						$("#contentForCartAction").html("Cập nhật thành công!");
 						$("#modalCart").modal('show');
 						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1500);
-					}
-					if(objJson.status == 2){
-						$("#contentForCartAction").html("Cập nhật thất bại");
+					} else if(objJson.status == 2){
+						$("#contentForCartAction").html("Cập nhật thất bại! Vui lòng kiểm tra lại định dạng input");
 						$("#modalCart").modal('show');
 						
-					}
-					if(objJson.status == 3){
+					} else if(objJson.status == 3){
 						$("#contentForCartAction").html("Lỗi! Bạn chưa đăng nhập");
 						$("#modalCart").modal('show');
+						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1500);
+					} else if (objJson.status == "4") {
+						$("#contentForCartAction").html("Tài khoản của bạn đã bị khoá! Thao tác thất bại");
+						$("#exampleModalCenter").modal('show');
 						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1500);
 					}
 				},
@@ -435,8 +584,8 @@
 			var x = $("#oldPass");
 			var y = $("#newPass");
 			var z = $("#confirmPass");
-			var reGex = /^[a-z0-9]{8,20}$/g;
-			if(reGex.test(y.val())==false){
+			var regEx = /^[a-z0-9]{8,20}$/g;
+			if(regEx.test(y.val())==false){
 				$("#contentForCartAction").html("Chỉ được nhập kí tự chữ thường và kí tự số");
 				$("#modalCart").modal('show');
 				return;
@@ -456,14 +605,19 @@
 						$("#modalCart").modal('show');
 						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1000);
 					}
-					if(objJson.status == 2){
-						$("#contentForCartAction").html("Cập nhật thất bại");
+					else if(objJson.status == 2){
+						$("#contentForCartAction").html("Cập nhật thất bại! Vui lòng kiểm tra lại định dạng input");
 						$("#modalCart").modal('show');
 						
 					}
-					if(objJson.status == 3){
+					else if(objJson.status == 3){
 						$("#contentForCartAction").html("Lỗi! Bạn chưa đăng nhập");
 						$("#modalCart").modal('show');
+						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1000);
+					}
+					else if (objJson.status == "4") {
+						$("#contentForCartAction").html("Tài khoản của bạn đã bị khoá! Thao tác thất bại");
+						$("#exampleModalCenter").modal('show');
 						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1000);
 					}
 				},

@@ -46,23 +46,32 @@
 </head>
 
 <body>
+
+
+	<c:if test="${sessionScope.UserSession.accInfor.type == 0 }">
+		<div id="feedback">
+			<a href="/Web/admin/quan-li-chung"><i class="fas fa-user-cog"></i>Trang
+				admin</a>
+		</div>
+	</c:if>
+
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="header-top">
 			<div class="container">
 				<div class="ht-left">
 					<div class="mail-service">
-						<i class=" fa fa-envelope"></i> lvshop@gmail.com
+						<i class=" fa fa-envelope"></i> ${shopInfor.email }
 					</div>
 					<div class="phone-service">
-						<i class=" fa fa-phone"></i> +84 00.000.000
+						<i class=" fa fa-phone"></i> ${shopInfor.phone }
 					</div>
 				</div>
 				<div class="ht-right">
 					<c:choose>
 						<c:when test="${sessionScope.UserSession == null }">
-							<a href="#" class="login-panel"><i class="fa fa-user"></i>Đăng
-								nhập</a>
+							<a href="/Web/login" class="login-panel"><i
+								class="fa fa-user"></i>Đăng nhập</a>
 						</c:when>
 						<c:otherwise>
 							<a href="/Web/trang-chu/trang-ca-nhan" class="login-panel"><i
@@ -77,7 +86,8 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo">
-							<a href="/Web/trang-chu/"> LV SHOP </a>
+							<a href="/Web/trang-chu/" style="font-size: 1.4rem;"> LV SHOP
+							</a>
 						</div>
 					</div>
 					<div class="col-lg-7 col-md-7">
@@ -86,8 +96,9 @@
 							<form class="input-group" action="/Web/trang-chu/san-pham">
 								<input type="hidden" value="1" name="trang"> <input
 									type="hidden" value="" name="thuongHieu"> <input
+									type="hidden" value="1" name="sapXep"><input
 									type="text" placeholder="Bạn muốn tìm gì?" name="timKiem">
-								<button type="submit">
+								<button type="button">
 									<i class="ti-search"></i>
 								</button>
 							</form>
@@ -104,14 +115,17 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="nav-item">
 			<div class="container">
 				<nav class="nav-menu mobile-menu">
 					<ul>
 						<li><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
-						<li class="active"><a
+						<li><a
 							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=">SHOP</a></li>
-						<li><a href="./contact.html">LIÊN HỆ</a></li>
+						<li class="active"><a href="#">LIÊN HỆ</a></li>
+						<li><a href="/Web/trang-chu/ma-giam-gia?trang=1&sapXep=1">KHUYẾN
+								MÃI</a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -141,7 +155,7 @@
 		<div class="container">
 			<div class="map-inner">
 				<iframe
-					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d48158.305462977965!2d-74.13283844036356!3d41.02757295168286!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2e440473470d7%3A0xcaf503ca2ee57958!2sSaddle%20River%2C%20NJ%2007458%2C%20USA!5e0!3m2!1sen!2sbd!4v1575917275626!5m2!1sen!2sbd"
+					src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15673.93543173646!2d106.77764594143702!3d10.85075518687103!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3175270d0ffe6e27%3A0x7def0afed2a6e529!2sHiep%20Phu%2C%20District%209%2C%20Ho%20Chi%20Minh%20City%2C%20Vietnam!5e0!3m2!1sen!2sbd!4v1621843386734!5m2!1sen!2sbd"
 					height="610" style="border: 0" allowfullscreen=""> </iframe>
 				<div class="icon">
 					<i class="fa fa-map-marker"></i>
@@ -155,7 +169,7 @@
 	<section class="contact-section spad">
 		<div class="container">
 			<div class="row">
-				<div class="col-lg-5">
+				<div class="col-lg-8 offset-2">
 					<div class="contact-title">
 						<h4>Địa chỉ liên hệ</h4>
 					</div>
@@ -165,7 +179,7 @@
 								<i class="ti-location-pin"></i>
 							</div>
 							<div class="ci-text">
-								<span>Address:</span>
+								<span>Địa chỉ:</span>
 								<p>Khu công nghệ cao Quận 9, Tp. Hồ Chí Minh</p>
 							</div>
 						</div>
@@ -184,38 +198,16 @@
 							</div>
 							<div class="ci-text">
 								<span>Email:</span>
-								<p>lvshop@gmail.com</p>
+								<p>hlvshop@gmail.com</p>
 							</div>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-6 offset-lg-1">
-					<div class="contact-form">
-						<div class="leave-comment">
-							<h4>Gửi Phản Hồi</h4>
-							<p>Chúng tôi sẽ cố gắng giải quyết sớm nhất có thể</p>
-							<form action="#" class="comment-form">
-								<div class="row">
-									<div class="col-lg-6">
-										<input type="text" placeholder="Your name">
-									</div>
-									<div class="col-lg-6">
-										<input type="text" placeholder="Your email">
-									</div>
-									<div class="col-lg-12">
-										<textarea placeholder="Your message"></textarea>
-										<button type="submit" class="site-btn">Gửi</button>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
+
 			</div>
 		</div>
 	</section>
 	<!-- Contact Section End -->
-
 	<!-- Footer Section Begin -->
 	<footer class="footer-section">
 		<div class="container">
@@ -223,13 +215,12 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#"><img
-								src="<c:url value="/template/Home/img/footer-logo.png"/>" alt=""></a>
+							<a href="#" style="font-size: 1.5rem; color: white;">LV Shop</a>
 						</div>
 						<ul>
-							<li>Địa chỉ: Khu công nghệ cao quận 9, Tp. Hồ Chí Minh</li>
-							<li>SĐT: +84 00.000.000</li>
-							<li>Email: lvshop@gmail.com</li>
+							<li>Địa chỉ: ${shopInfor.address }</li>
+							<li>SĐT: ${shopInfor.phone }</li>
+							<li>Email: ${shopInfor.email }</li>
 						</ul>
 						<div class="footer-social">
 							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
@@ -241,29 +232,27 @@
 				</div>
 				<div class="col-lg-2 offset-lg-1">
 					<div class="footer-widget">
-						<h5>Information</h5>
+						<h5>Shop</h5>
 						<ul>
-							<li><a href="#">About Us</a></li>
-							<li><a href="#">Checkout</a></li>
-							<li><a href="#">Contact</a></li>
+							<li><a href="/Web/trang-chu/san-pham?timKiem=&thuongHieu=&sapXep=1&trang=1">Sản phẩm</a></li>
+							<li><a href="/Web/trang-chu/lien-he">Liên hệ</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-2">
 					<div class="footer-widget">
-						<h5>My Account</h5>
+						<h5>Tài khoản</h5>
 						<ul>
-							<li><a href="#">My Account</a></li>
-							<li><a href="#">Shopping Cart</a></li>
-							<li><a href="#">Shop</a></li>
+							<li><a href="/Web/trang-chu/trang-ca-nhan">Thông tin</a></li>
+							<li><a href="/Web/trang-chu/gio-hang">Giỏ hàng</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="newslatter-item">
 						<h5>Phản hồi với chúng tôi</h5>
-						<a href="#">Gửi email để chúng tôi có thể tiếp nhận ý kiến của
-							bạn.</a>
+						<p>Gửi email để chúng tôi có thể tiếp nhận ý kiến của
+							bạn</p>
 					</div>
 				</div>
 			</div>

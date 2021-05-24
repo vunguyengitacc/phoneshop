@@ -43,26 +43,36 @@
 	type="text/css">
 <link rel="stylesheet"
 	href="<c:url value="/template/Home/css/style.css"/>" type="text/css">
+<link rel="stylesheet"
+	href="<c:url value="/template/Home/css/success-feature.css"/>"
+	type="text/css">
 </head>
 
 <body>
+
+	<c:if test="${sessionScope.UserSession.accInfor.type == 0 }">
+		<div id="feedback">
+			<a href="/Web/admin/quan-li-chung"><i class="fas fa-user-cog"></i>Trang
+				admin</a>
+		</div>
+	</c:if>
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="header-top">
 			<div class="container">
 				<div class="ht-left">
 					<div class="mail-service">
-						<i class=" fa fa-envelope"></i> lvshop@gmail.com
+						<i class=" fa fa-envelope"></i> ${shopInfor.email }
 					</div>
 					<div class="phone-service">
-						<i class=" fa fa-phone"></i> +84 00.000.000
+						<i class=" fa fa-phone"></i> ${shopInfor.phone }
 					</div>
 				</div>
 				<div class="ht-right">
 					<c:choose>
 						<c:when test="${sessionScope.UserSession == null }">
-							<a href="#" class="login-panel"><i class="fa fa-user"></i>Đăng
-								nhập</a>
+							<a href="/Web/login" class="login-panel"><i
+								class="fa fa-user"></i>Đăng nhập</a>
 						</c:when>
 						<c:otherwise>
 							<a href="/Web/trang-chu/trang-ca-nhan" class="login-panel"><i
@@ -77,7 +87,8 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo">
-							<a href="/Web/trang-chu/"> LV SHOP </a>
+							<a href="/Web/trang-chu/" style="font-size: 1.4rem;"> LV SHOP
+							</a>
 						</div>
 					</div>
 					<div class="col-lg-7 col-md-7">
@@ -85,7 +96,8 @@
 							<button type="button" class="category-btn">Tìm sản phẩm</button>
 							<form class="input-group" action="/Web/trang-chu/san-pham">
 								<input type="hidden" value="1" name="trang"> <input
-									type="hidden" value="" name="thuongHieu"> <input
+									type="hidden" value="" name="thuongHieu"><input
+									type="hidden" value="1" name="sapXep"> <input
 									type="text" placeholder="Bạn muốn tìm gì?" name="timKiem">
 								<button type="button">
 									<i class="ti-search"></i>
@@ -110,8 +122,10 @@
 					<ul>
 						<li class="active"><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
 						<li><a
-							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=">SHOP</a></li>
-						<li><a href="./contact.html">LIÊN HỆ</a></li>
+							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=&sapXep=1">SHOP</a></li>
+						<li><a href="/Web/trang-chu/lien-he">LIÊN HỆ</a></li>
+						<li><a href="/Web/trang-chu/ma-giam-gia?trang=1&sapXep=1">KHUYẾN
+								MÃI</a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -120,26 +134,93 @@
 	</header>
 	<!-- Header End -->
 	<!-- Banner Section Begin -->
-	<div class="banner-section spad">
-		<div class="container-fluid">
-			<div class="row">
-				<div class="col-lg-4">
-					<div class="single-banner">
-						<img src="<c:url value="/template/Home/img/banner-1.jpg"/>" alt="">
-						<div class="inner-text">
-							<h4>Men’s</h4>
+
+	<!-- Banner Section End -->
+
+	<section>
+
+		<div id="myCarousel" class="carousel slide carousel-fade"
+			data-ride="carousel">
+			<div class="carousel-inner" id="carousel-block">
+
+				<div class="carousel-item active">
+					<div class="mask flex-center">
+						<div class="container">
+							<div class="row align-items-center">
+								<div class="col-md-7 col-12 order-md-1 order-2"
+									style="padding: 8vw;">
+									<h4>Sản phẩm mới</h4>
+									<p>Những sản phẩm mới nhất của chúng tôi</p>
+									<a
+										href="/Web/trang-chu/san-pham?trang=1&timKiem=&thuongHieu=&sapXep=1">ĐẾN
+										NGAY</a>
+								</div>
+								<div class="col-md-5 col-12 order-md-2 order-1">
+									<img style="height: 300px; width: 350px"
+										src="<c:url value="/template/Home/img/newicon.png"/>"
+										class="mx-auto" alt="slide">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<div class="mask flex-center">
+						<div class="container">
+							<div class="row align-items-center">
+								<div class="col-md-7 col-12 order-md-1 order-2"
+									style="padding: 8vw;">
+									<h4>Săn sale</h4>
+									<p>Vô số mã khuyến mãi giúp bạn bạn tiết kiệm ví tiến</p>
+									<a href="/Web/trang-chu/ma-giam-gia?trang=1&sapXep=1">ĐẾN
+										NGAY</a>
+								</div>
+								<div class="col-md-5 col-12 order-md-2 order-1">
+									<img src="<c:url value="/template/Home/img/sale-logo.png"/>"
+										style="height: 300px; width: 350px" class="mx-auto"
+										alt="slide">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="carousel-item">
+					<div class="mask flex-center">
+						<div class="container">
+							<div class="row align-items-center">
+								<div class="col-md-7 col-12 order-md-1 order-2"
+									style="padding: 8vw;">
+									<h4>Sản phẩm hot</h4>
+									<p>Bắt kịp xu hướng của mọi người</p>
+									<a
+										href="/Web/trang-chu/san-pham?timKiem=&thuongHieu=&sapXep=4&trang=1">ĐẾN
+										NGAY</a>
+								</div>
+								<div class="col-md-5 col-12 order-md-2 order-1">
+									<img src="<c:url value="/template/Home/img/top-sell.png"/>"
+										style="height: 300px; width: 350px" class="mx-auto"
+										alt="slide">
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
+			<a class="carousel-control-prev" href="#myCarousel" role="button"
+				data-slide="prev"> <span class="carousel-control-prev-icon"
+				aria-hidden="true"></span> <span class="sr-only">Previous</span>
+			</a> <a class="carousel-control-next" href="#myCarousel" role="button"
+				data-slide="next"> <span class="carousel-control-next-icon"
+				aria-hidden="true"></span> <span class="sr-only">Next</span>
+			</a>
 		</div>
-	</div>
-	<!-- Banner Section End -->
-	<section>
-		<section class="product-shop spad">
+		<!--slide end-->
+
+
+		<section class="product-shop spad" style="margin-top: 50px; margin-bottom: 100px">
 			<div class="container">
 				<div class="row">
-
+					<h3 style="margin-bottom: 10vh">SẢN PHẨM NỔI BẬT</h3>
 					<div class="col-lg-12 order-1 order-lg-2">
 						<div class="product-list">
 							<div class="row">
@@ -158,7 +239,7 @@
 													</c:otherwise>
 												</c:choose>
 												<c:if test="${item.promotionPrice != '0.00' }">
-													<div class="sale pp-sale">Sale</div>
+													<div class="sale pp-sale">Khuyến mãi</div>
 												</c:if>
 												<ul>
 													<li class="quick-view"><a
@@ -188,8 +269,9 @@
 							</div>
 						</div>
 						<div class="loading-more">
-							<a href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=">
-								Nhiều hơn nữa </a>
+							<a
+								href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=&sapXep=1">
+								Xem thêm </a>
 						</div>
 					</div>
 				</div>
@@ -203,12 +285,12 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#">LV Shop</a>
+							<a href="#" style="font-size: 1.5rem; color: white;">LV Shop</a>
 						</div>
 						<ul>
-							<li>Địa chỉ: Khu công nghệ cao quận 9, Tp. Hồ Chí Minh</li>
-							<li>SĐT: +84 00.000.000</li>
-							<li>Email: lvshop@gmail.com</li>
+							<li>Địa chỉ: ${shopInfor.address }</li>
+							<li>SĐT: ${shopInfor.phone }</li>
+							<li>Email: ${shopInfor.email }</li>
 						</ul>
 						<div class="footer-social">
 							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
@@ -220,10 +302,12 @@
 				</div>
 				<div class="col-lg-2 offset-lg-1">
 					<div class="footer-widget">
-						<h5>Về chúng tôi</h5>
+						<h5>Shop</h5>
 						<ul>
-							<li><a href="#">Chính sách</a></li>
-							<li><a href="#">Liên hệ</a></li>
+							<li><a
+								href="/Web/trang-chu/san-pham?timKiem=&thuongHieu=&sapXep=1&trang=1">Sản
+									phẩm</a></li>
+							<li><a href="/Web/trang-chu/lien-he">Liên hệ</a></li>
 						</ul>
 					</div>
 				</div>
@@ -231,16 +315,15 @@
 					<div class="footer-widget">
 						<h5>Tài khoản</h5>
 						<ul>
-							<li><a href="#">Thông tin</a></li>
-							<li><a href="#">Giỏ hàng</a></li>
+							<li><a href="/Web/trang-chu/trang-ca-nhan">Thông tin</a></li>
+							<li><a href="/Web/trang-chu/gio-hang">Giỏ hàng</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="newslatter-item">
 						<h5>Phản hồi với chúng tôi</h5>
-						<a href="#">Gửi email để chúng tôi có thể tiếp nhận ý kiến của
-							bạn.</a>
+						<p>Gửi email để chúng tôi có thể tiếp nhận ý kiến của bạn</p>
 					</div>
 				</div>
 			</div>

@@ -46,23 +46,31 @@
 </head>
 
 <body>
+
+	<c:if test="${sessionScope.UserSession.accInfor.type == 0 }">
+		<div id="feedback">
+			<a href="/Web/admin/quan-li-chung"><i class="fas fa-user-cog"></i>Trang
+				admin</a>
+		</div>
+	</c:if>
+
 	<!-- Header Section Begin -->
 	<header class="header-section">
 		<div class="header-top">
 			<div class="container">
 				<div class="ht-left">
 					<div class="mail-service">
-						<i class=" fa fa-envelope"></i> lvshop@gmail.com
+						<i class=" fa fa-envelope"></i> ${shopInfor.email }
 					</div>
 					<div class="phone-service">
-						<i class=" fa fa-phone"></i> +84 00.000.000
+						<i class=" fa fa-phone"></i> ${shopInfor.phone }
 					</div>
 				</div>
 				<div class="ht-right">
 					<c:choose>
 						<c:when test="${sessionScope.UserSession == null }">
-							<a href="#" class="login-panel"><i class="fa fa-user"></i>Đăng
-								nhập</a>
+							<a href="/Web/login" class="login-panel"><i
+								class="fa fa-user"></i>Đăng nhập</a>
 						</c:when>
 						<c:otherwise>
 							<a href="/Web/trang-chu/trang-ca-nhan" class="login-panel"><i
@@ -77,7 +85,8 @@
 				<div class="row">
 					<div class="col-lg-2 col-md-2">
 						<div class="logo">
-							<a href="/Web/trang-chu/"> LV SHOP </a>
+							<a href="/Web/trang-chu/" style="font-size: 1.4rem;"> HLV
+								SHOP </a>
 						</div>
 					</div>
 					<div class="col-lg-7 col-md-7">
@@ -86,6 +95,7 @@
 							<form class="input-group" action="/Web/trang-chu/san-pham">
 								<input type="hidden" value="1" name="trang"> <input
 									type="hidden" value="" name="thuongHieu"> <input
+									type="hidden" value="1" name="sapXep"> <input
 									type="text" placeholder="Bạn muốn tìm gì?" name="timKiem">
 								<button type="submit">
 									<i class="ti-search"></i>
@@ -110,8 +120,10 @@
 					<ul>
 						<li class="active"><a href="/Web/trang-chu/">TRANG CHỦ</a></li>
 						<li><a
-							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=">SHOP</a></li>
+							href="/Web/trang-chu/san-pham?trang=1&thuongHieu=&timKiem=&sapXep=1">SHOP</a></li>
 						<li><a href="./contact.html">LIÊN HỆ</a></li>
+						<li><a href="/Web/trang-chu/ma-giam-gia?trang=1&sapXep=1">KHUYẾN
+								MÃI</a></li>
 					</ul>
 				</nav>
 				<div id="mobile-menu-wrap"></div>
@@ -200,10 +212,11 @@
 							</div>
 							<div class="discount-coupon">
 								<h6>Mã khuyến mãi</h6>
-								<form action="#" class="coupon-form">
-									<input type="text" placeholder="Enter your codes">
-									<button type="submit" class="site-btn coupon-btn">Xác
-										thực</button>
+								<form id="addPromotionForm" class="coupon-form">
+									<input type="text" id="idPromo" name="idKhuyenMai"
+										placeholder="Enter your codes">
+									<button type="button" onclick="addPromotionHandler()"
+										class="site-btn coupon-btn">Xác thực</button>
 								</form>
 							</div>
 						</div>
@@ -211,9 +224,10 @@
 							<div class="proceed-checkout">
 								<ul>
 									<li class="subtotal">Giá ban đầu <span id="subTotalValue">${sessionScope.cart.totalValue }</span></li>
-									<li class="cart-total">Tổng cộng <span id="totalValue">${sessionScope.cart.totalValue }</span></li>
+									<li class="cart-total">Tổng cộng <span id="totalValue">${sessionScope.cart.promoValue }</span></li>
 								</ul>
-								<a href="/Web/trang-chu/gio-hang/thanh-toan" class="proceed-btn">THANH TOÁN</a>
+								<a href="/Web/trang-chu/gio-hang/thanh-toan" class="proceed-btn">THANH
+									TOÁN</a>
 							</div>
 						</div>
 					</div>
@@ -221,9 +235,9 @@
 			</div>
 		</div>
 	</section>
-	
+
 	<!-- Cart Detail Section End -->
-	
+
 	<!-- Modal Add Cart	Start-->
 	<div class="modal fade" tabindex="-1" role="dialog"
 		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
@@ -242,8 +256,8 @@
 		</div>
 	</div>
 	<!-- Modal Add Cart	End-->
-	
-	
+
+
 	<!-- Footer Section Begin -->
 	<footer class="footer-section">
 		<div class="container">
@@ -251,12 +265,12 @@
 				<div class="col-lg-3">
 					<div class="footer-left">
 						<div class="footer-logo">
-							<a href="#">LV Shop</a>
+							<a href="#" style="font-size: 1.5rem; color: white;">LV Shop</a>
 						</div>
 						<ul>
-							<li>Địa chỉ: Khu công nghệ cao quận 9, Tp. Hồ Chí Minh</li>
-							<li>SĐT: +84 00.000.000</li>
-							<li>Email: lvshop@gmail.com</li>
+							<li>Địa chỉ: ${shopInfor.address }</li>
+							<li>SĐT: ${shopInfor.phone }</li>
+							<li>Email: ${shopInfor.email }</li>
 						</ul>
 						<div class="footer-social">
 							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
@@ -268,10 +282,10 @@
 				</div>
 				<div class="col-lg-2 offset-lg-1">
 					<div class="footer-widget">
-						<h5>Về chúng tôi</h5>
+						<h5>Shop</h5>
 						<ul>
-							<li><a href="#">Chính sách</a></li>
-							<li><a href="#">Liên hệ</a></li>
+							<li><a href="/Web/trang-chu/san-pham?timKiem=&thuongHieu=&sapXep=1&trang=1">Sản phẩm</a></li>
+							<li><a href="/Web/trang-chu/lien-he">Liên hệ</a></li>
 						</ul>
 					</div>
 				</div>
@@ -279,19 +293,16 @@
 					<div class="footer-widget">
 						<h5>Tài khoản</h5>
 						<ul>
-							<li><a href="#">Thông tin</a></li>
-							<li><a href="#">Giỏ hàng</a></li>
+							<li><a href="/Web/trang-chu/trang-ca-nhan">Thông tin</a></li>
+							<li><a href="/Web/trang-chu/gio-hang">Giỏ hàng</a></li>
 						</ul>
 					</div>
 				</div>
 				<div class="col-lg-4">
 					<div class="newslatter-item">
 						<h5>Phản hồi với chúng tôi</h5>
-						<p>Gửi email để chúng tôi có thể tiếp nhận ý kiến của bạn.</p>
-						<form action="#" class="subscribe-form">
-
-							<button type="button">THỰC HIỆN</button>
-						</form>
+						<p>Gửi email để chúng tôi có thể tiếp nhận ý kiến của
+							bạn</p>
 					</div>
 				</div>
 			</div>
@@ -316,7 +327,7 @@
 	<script type="text/javascript">
 		function changeHandler(x, y, z, t){
 			$.ajax({
-				url: "/Web/trang-chu/api/gio-hang/cap-nhat-gio-hang?idMau="+y+"&idSanPham="+z+"&soLuong=0&thayDoiSoLuong="+x,
+				url: "/Web/trang-chu/api/gio-hang?idMau="+y+"&idSanPham="+z+"&soLuong=0&thayDoiSoLuong="+x,
 				type: 'PUT', 
 				success: function(response){
 					var objJson = JSON.parse(response);
@@ -329,7 +340,7 @@
 						$("#amountItemCart").html(objJson.totalItem);
 						$("#amountValueCart").html(objJson.totalValue);
 						$("#subTotalValue").html(objJson.totalValue);
-						$("#totalValue").html(objJson.totalValue);	
+						$("#totalValue").html(objJson.promoValue);
 					}
 				},
 				error: function(error){
@@ -340,7 +351,7 @@
 		}
 		function sendAsync(x, y, z){
 			$.ajax({
-				url: "/Web/trang-chu//api/gio-hang/xoa-item-gio-hang?idSanPham="+x+"&idMau="+y,
+				url: "/Web/trang-chu/api/gio-hang/item?idSanPham="+x+"&idMau="+y,
 				type: 'DELETE',
 				success: function(response){
 					var objJson = JSON.parse(response);
@@ -354,6 +365,54 @@
 						$("#subTotalValue").html(objJson.totalValue);
 						$("#totalValue").html(objJson.totalValue);
 						z.remove();
+					}
+				},
+				error: function(error){
+					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#modalCart").modal('show');
+				}
+			})
+		}
+		
+		function addPromotionHandler() {
+			var input = $("#idPromo");
+			var regEx = /^\w{8,}$/gi;
+			if(!regEx.test(input.val())){
+				$("#contentForCartAction").html("Nhập sai định dạng mã");
+				$("#modalCart").modal('show');
+				if(input.val()!="")
+					return;
+			}
+			$.ajax({
+				url: "/Web/trang-chu/api/gio-hang/ma-khuyen-mai?" + $("#addPromotionForm").serialize(),
+				type: 'PUT',
+				success: function(response){
+					var objJson = JSON.parse(response);
+					if(objJson.status == 0){
+						$("#amountItemCart").html(objJson.totalItem);
+						$("#amountValueCart").html(objJson.totalValue);
+						$("#subTotalValue").html(objJson.totalValue);
+						$("#totalValue").html(objJson.promoValue);
+					}
+					else if(objJson.status == 1){
+						$("#contentForCartAction").html("Thêm thành công");
+						$("#modalCart").modal('show');
+						$("#amountItemCart").html(objJson.totalItem);
+						$("#amountValueCart").html(objJson.totalValue);
+						$("#subTotalValue").html(objJson.totalValue);
+						$("#totalValue").html(objJson.promoValue);
+					}
+					else if(objJson.status == 2){
+						$("#contentForCartAction").html("Mã đã dùng");
+						$("#modalCart").modal('show');
+					}
+					else if(objJson.status == 3){
+						$("#contentForCartAction").html("Chưa đăng nhập");
+						$("#modalCart").modal('show');
+					}
+					else if(objJson.status == 4){
+						$("#contentForCartAction").html("Mã không tồn tại");
+						$("#modalCart").modal('show');
 					}
 				},
 				error: function(error){

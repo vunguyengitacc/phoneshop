@@ -5,6 +5,7 @@ import java.util.List;
 
 public interface Product {
 	public List<javaweb.Entity.Product> getAll();
+	public List<javaweb.Entity.Product> getAllFetch(List<String> lstField);
 
 	public List<javaweb.Entity.Product> getByTradeMark(String tradeMark);
 

@@ -1,6 +1,7 @@
 package javaweb.controller.Admin;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpSession;
 
@@ -20,12 +21,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javaweb.Entity.Trademark;
 import javaweb.controller.session.UserSession;
 import javaweb.services.inter.Account;
+import javaweb.services.inter.Bill;
 import javaweb.services.inter.Color;
 import javaweb.services.inter.Product;
+import javaweb.services.inter.ProductHasColorHasBill;
+import javaweb.services.inter.Promotion;
 import javaweb.services.inter.TradeMark;
 
 @RestController
-@RequestMapping("admin/api")
+@RequestMapping(value = "admin/api", produces = "text/plain;charset=UTF-8")
 public class RestAdminController {
 	@Autowired
 	Account acc;
@@ -37,6 +41,12 @@ public class RestAdminController {
 	Product pro;
 	@Autowired
 	javaweb.services.inter.ProductHasColor pro_col;
+	@Autowired
+	Promotion promo;
+	@Autowired
+	Bill bill;
+	@Autowired
+	ProductHasColorHasBill pro_col_bill;
 
 	@PutMapping("/tai-khoan/khoa")
 	@ResponseBody
@@ -46,13 +56,13 @@ public class RestAdminController {
 			return "{ \"status\": 3}";// chua dang nhap
 		if (username == "")
 			return "{ \"status\": 2}";// cap nhat khong thanh cong
-		if (acc.setNewStatus(username) == true)
+		if (acc.putNewStatus(username) == true)
 			return "{ \"status\": 1}";// cap nhat thanh cong
 		else
 			return "{ \"status\": 2}";// cap nhat khong thanh cong
 	}
 
-	@PostMapping("/san-pham/mau")
+	@PostMapping(value = "/san-pham/mau")
 	@ResponseBody
 	public String addColor(Model model, HttpSession session, @RequestParam("tenMauMoi") String newColorName,
 			@RequestParam("idSanPham") int idProduct) {
@@ -67,7 +77,7 @@ public class RestAdminController {
 			ObjectMapper mapper = new ObjectMapper();
 			try {
 				String rs = mapper.writeValueAsString(newCol);
-				return rs;// cap nhat thanh cong
+				return rs;// Cập nhật thành công
 			} catch (JsonProcessingException e) {
 				e.printStackTrace();
 				return "{ \"status\": 1}";// cap nhat thanh cong
@@ -76,7 +86,7 @@ public class RestAdminController {
 			return "{ \"status\": 2}";// cap nhat khong thanh cong
 	}
 
-	@PostMapping("/thuong-hieu")
+	@PostMapping(value = "/thuong-hieu")
 	@ResponseBody
 	public String addTrademark(Model model, HttpSession session,
 			@RequestParam("tenThuongHieuMoi") String newTradeName) {
@@ -99,63 +109,9 @@ public class RestAdminController {
 			return "{ \"status\": 2}";// cap nhat khong thanh cong
 	}
 
-	@PostMapping("/san-pham")
-	@ResponseBody
-	public String addNewProduct(Model model, HttpSession session, @RequestParam("idSanPham") String id,
-			@RequestParam("tenSanPham") String name, @RequestParam("giaGoc") String originalPrice,
-			@RequestParam("giaBan") String price, @RequestParam("giaKhuyenMai") String promotionPrice,
-			@RequestParam("idThuongHieu") int idTrade, @RequestParam("ram") String ram, @RequestParam("rom") String rom,
-			@RequestParam("kichCoManHinh") BigDecimal screenSize, @RequestParam("camTruoc") String frontCam,
-			@RequestParam("camSau") String backCam, @RequestParam("heDieuHanh") String os,
-			@RequestParam("cpu") String cpu, @RequestParam("gpu") String gpu, @RequestParam("pin") String pin,
-			@RequestParam("sim") String sim, @RequestParam("moTa") String description) {
-		UserSession userSs = (UserSession) session.getAttribute("UserSession");
-		if (userSs == null)
-			return "{ \"status\": 3}";// chua dang nhap
-		try {
-			int rsPro = pro.postNew(name, new BigDecimal(originalPrice).abs(), new BigDecimal(price).abs(),
-					new BigDecimal(promotionPrice).abs(), "", description, Math.abs(Integer.parseInt(ram)),
-					Math.abs(Integer.parseInt(rom)), screenSize, frontCam, backCam, Math.abs(Integer.parseInt(pin)), os,
-					cpu, gpu, sim, idTrade);
-			if (rsPro != -1) {
-				return "{ \"status\": 1}";// cap nhat thanh cong
-			} else
-				return "{ \"status\": 2}";// cap nhat khong thanh cong
-		} catch (Exception e) {
-			return "{ \"status\": 4}";// loi nhap sai dinh dang
-		}
 
-	}
 
-	@PutMapping("/san-pham")
-	@ResponseBody
-	public String updateProduct(Model model, HttpSession session, @RequestParam("idSanPham") int id,
-			@RequestParam("tenSanPham") String name, @RequestParam("giaGoc") String originalPrice,
-			@RequestParam("giaBan") String price, @RequestParam("giaKhuyenMai") String promotionPrice,
-			@RequestParam("soLuongMau") String amountColor, @RequestParam("idMau") int idColor,
-			@RequestParam("idThuongHieu") int idTrade, @RequestParam("ram") String ram, @RequestParam("rom") String rom,
-			@RequestParam("kichCoManHinh") BigDecimal screenSize, @RequestParam("camTruoc") String frontCam,
-			@RequestParam("camSau") String backCam, @RequestParam("heDieuHanh") String os,
-			@RequestParam("cpu") String cpu, @RequestParam("gpu") String gpu, @RequestParam("pin") String pin,
-			@RequestParam("sim") String sim, @RequestParam("moTa") String description) {
-		UserSession userSs = (UserSession) session.getAttribute("UserSession");
-		if (userSs == null)
-			return "{ \"status\": 3}";// chua dang nhap
-		try {
-			boolean rsProduct = pro.putByID(id, name, new BigDecimal(originalPrice).abs(), new BigDecimal(price).abs(),
-					new BigDecimal(promotionPrice).abs(), "", description, Math.abs(Integer.parseInt(ram)),
-					Math.abs(Integer.parseInt(rom)), screenSize, frontCam, backCam, Math.abs(Integer.parseInt(pin)), os,
-					cpu, gpu, sim, idTrade);
-			boolean rsColor = pro_col.put(id, idColor, Math.abs(Integer.parseInt(amountColor)));
-			if (rsProduct || rsColor) {
-				return "{ \"status\": 1}";// cap nhat thanh cong
-			} else
-				return "{ \"status\": 2}";// cap nhat khong thanh cong
-		} catch (Exception e) {
-			return "{ \"status\": 4}";// loi nhap sai dinh dang
-		}
 
-	}
 
 	@DeleteMapping("/san-pham")
 	@ResponseBody
@@ -168,13 +124,98 @@ public class RestAdminController {
 				if (pro.deleteByID(id) == true) {
 					return "{ \"status\": 1}";// cap nhat thanh cong
 				} else
-					return "{ \"status\": 2}";// cap nhat khong thanh cong
+					return "{ \"status\": 2}";//cập nhật thất bại 
 			} else
-				return "{ \"status\": 2}";// cap nhat khong thanh cong
+				return "{ \"status\": 2}";//cập nhật thất bại
 		} catch (Exception e) {
 			e.printStackTrace();
-			return "{ \"status\": 2}";// cap nhat khong thanh cong
+			return "{ \"status\": 4}";// lỗi
 		}
 
 	}
+
+	@PostMapping("/ma-khuyen-mai")
+	@ResponseBody
+	public String addPromotion(Model model, HttpSession session, @RequestParam("idKhuyenMai") String id,
+			@RequestParam("ngayHetHan") String expriedDate, @RequestParam("giaTri") String value,
+			@RequestParam("loai") int type) {
+		UserSession userSs = (UserSession) session.getAttribute("UserSession");
+		if (userSs == null)
+			return "{ \"status\": 3}";// chua dang nhap
+		if (id == "")
+			return "{ \"status\": 2}";// cap nhat khong thanh cong
+		try {
+			boolean rs = promo.postNew(id.toUpperCase(), new BigDecimal(value),
+					new SimpleDateFormat("yyyy-MM-dd").parse(expriedDate), type);
+			;
+			if (rs) {
+				return "{ \"status\": 1}";// cap nhat thanh cong
+			} else
+				return "{ \"status\": 2}";// cap nhat khong thanh cong
+		} catch (Exception e) {
+			return "{ \"status\": 4}";// loi khac(sai dinh dang input url, loi truy van db,...)
+		}
+	}
+
+	@PutMapping("/ma-khuyen-mai")
+	@ResponseBody
+	public String updatePromotion(Model model, HttpSession session, @RequestParam("idKhuyenMai") String id,
+			@RequestParam("ngayHetHan") String expriedDate, @RequestParam("giaTri") String value,
+			@RequestParam("loai") int type) {
+		UserSession userSs = (UserSession) session.getAttribute("UserSession");
+		if (userSs == null)
+			return "{ \"status\": 3}";// chua dang nhap
+		if (id == "")
+			return "{ \"status\": 2}";// cap nhat khong thanh cong
+		try {
+			boolean rs = promo.put(id, new BigDecimal(value), new SimpleDateFormat("yyyy-MM-dd").parse(expriedDate),
+					type);
+			if (rs) {
+				return "{ \"status\": 1}";// cap nhat thanh cong
+			} else
+				return "{ \"status\": 2}";// cap nhat khong thanh cong
+		} catch (Exception e) {
+			return "{ \"status\": 4}";// loi khac(sai dinh dang input url, loi truy van db,...)
+		}
+	}
+
+	@PutMapping("/hoa-don")
+	@ResponseBody
+	public String updateBill(Model model, HttpSession session, @RequestParam("idHoaDon") int id) {
+		UserSession userSs = (UserSession) session.getAttribute("UserSession");
+		if (userSs == null)
+			return "{ \"status\": 3}";// chưa đăng nhập
+		try {
+			boolean rs = bill.putStatusByID(id);
+			if (rs)
+				return "{ \"status\": 1}";// thành công
+			else
+				return "{ \"status\": 2}";// thất bại
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "{ \"status\": 4}";// Lỗi truy vấn
+		}
+
+	}
+
+	@DeleteMapping("/hoa-don")
+	@ResponseBody
+	public String deleteBill(Model model, HttpSession session, @RequestParam("idHoaDon") int id) {
+		UserSession userSs = (UserSession) session.getAttribute("UserSession");
+		if (userSs == null)
+			return "{ \"status\": 3}";// chua dang nhap
+		try {
+			boolean rsBillDetail = pro_col_bill.deleteByBillId(id);
+			boolean rsBill = bill.deleteByID(id);
+			if (rsBillDetail && rsBill)
+				return "{ \"status\": 1}";// thành công
+			else
+				return "{ \"status\": 2}";// thất bại
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "{ \"status\": 4}";// Lỗi truy vấn
+		}
+
+	}
+
 }

@@ -4,21 +4,22 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("District")
 public class District implements javaweb.services.inter.District {
 
-	DBContext factory = new DBContext();
+	@Autowired
+	DBContext factory;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<javaweb.Entity.District> getAll() {
 		Session ss = factory.getSession();
 		ss.beginTransaction();
-		List rs = ss.createCriteria(javaweb.Entity.District.class).list();
+		List<javaweb.Entity.District> rs = ss.createCriteria(javaweb.Entity.District.class).list();
 		ss.close();
-		if(rs.size()==0)
-			return null;
 		return rs;
 	}
 

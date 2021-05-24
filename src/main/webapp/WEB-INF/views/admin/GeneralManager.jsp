@@ -19,8 +19,18 @@
 	href="https://cdn.materialdesignicons.com/4.4.95/css/materialdesignicons.min.css"
 	rel="stylesheet" />
 
-<!-- SLEEK CSS -->
-<link id="sleek-css" rel="stylesheet" href="<c:url value="template/Admin/assets/css/sleek.css"/>" />
+
+<link
+	href="<c:url value="/template/Admin/assets/plugins/data-tables/datatables.bootstrap4.min.css"/>"
+	rel='stylesheet'>
+
+
+<!-- Css Styles -->
+<link id="sleek-css" rel="stylesheet"
+	href="<c:url value="/template/Admin/assets/css/sleek.css"/>" />
+
+<script
+	src="<c:url value="/template/Admin/assets/plugins/nprogress/nprogress.js"/>"></script>
 </head>
 
 <body class="header-fixed sidebar-fixed sidebar-dark header-light"
@@ -38,8 +48,8 @@
 			<div id="sidebar" class="sidebar sidebar-with-footer">
 				<!-- Aplication Brand -->
 				<div class="app-brand">
-					<a href="/Web/admin/general" title="Sleek Dashboard"> <span>LV</span>
-						<span class="brand-name text-truncate">LV Shop</span>
+					<a href="/Web/trang-chu/" title="Sleek Dashboard"> <span
+						class="brand-name text-truncate">LV Shop</span>
 					</a>
 				</div>
 
@@ -49,56 +59,35 @@
 					<ul class="nav sidebar-inner" id="sidebar-menu">
 
 						<li class="has-sub "><a class="sidenav-item-link" href="#"
-							aria-expanded="false" style="cursor: pointer;"> <i
+							style="color: white; font-size: 1.005rem" aria-expanded="false"
+							style="cursor: pointer;"> <i
 								class="mdi mdi-pencil-box-multiple"></i> <span class="nav-text">Quản
 									lí chung</span>
 						</a></li>
 
-						<li class="has-sub "><a class="sidenav-item-link" href="#"
-							aria-expanded="false" style="cursor: pointer;"> <i
-								class="mdi mdi-cart"></i> <span class="nav-text">Quản lí
-									hoá đơn</span>
+						<li class="has-sub "><a class="sidenav-item-link"
+							href="/Web/admin/danh-sach-hoa-don" aria-expanded="false"
+							style="cursor: pointer;"> <i class="mdi mdi-cart"></i> <span
+								class="nav-text">Hoá đơn</span>
 						</a></li>
 						<!--Products-->
 						<li class="has-sub "><a class="sidenav-item-link"
-							data-toggle="collapse" data-target="#tables"
-							aria-expanded="false" aria-controls="tables"
+							href="/Web/admin/danh-sach-san-pham" aria-expanded="false"
+							style="cursor: pointer;"> <i class="mdi mdi-cellphone"></i> <span
+								class="nav-text">Sản phẩm</span>
+						</a></li>
+						<li class="has-sub "><a class="sidenav-item-link"
+							href="/Web/admin/danh-sach-ma-khuyen-mai" aria-expanded="false"
 							style="cursor: pointer;"> <i
-								class="mdi mdi-paper-cut-vertical"></i> <span class="nav-text">Quản
-									lí sản phẩm</span> <b class="caret"></b>
-						</a>
-
-							<ul class="collapse " id="tables" data-parent="#sidebar-menu">
-									<li class=""><a class="sidenav-item-link"
-										href="basic-tables.html"> <span class="nav-text">Thương
-												hiệu</span>
-									</a></li>
-									<li class=""><a class="sidenav-item-link"
-										href="basic-tables.html"> <span class="nav-text">Mặt
-												hàng</span>
-									</a></li>
-
-							</ul></li>
+								class="mdi mdi-paper-cut-vertical"></i> <span class="nav-text">Khuyến
+									mãi</span>
+						</a></li>
 						<!--Account-->
 						<li class="has-sub "><a class="sidenav-item-link"
-							data-toggle="collapse" data-target="#accountMenu"
-							aria-expanded="false" aria-controls="tables"
+							href="/Web/admin/danh-sach-tai-khoan" aria-expanded="false"
 							style="cursor: pointer;"> <i class="mdi mdi-account"></i> <span
-								class="nav-text">Quản lí tài khoản</span> <b class="caret"></b>
-						</a>
-
-							<ul class="collapse " id="accountMenu"
-								data-parent="#sidebar-menu">
-									<li class=""><a class="sidenav-item-link"
-										href="basic-tables.html"> <span class="nav-text">Cá
-												nhân</span>
-									</a></li>
-									<li class=""><a class="sidenav-item-link"
-										href="basic-tables.html"> <span class="nav-text">Khách
-												hàng</span>
-									</a></li>
-
-							</ul></li>
+								class="nav-text">Tài khoản</span>
+						</a></li>
 					</ul>
 				</div>
 
@@ -131,8 +120,8 @@
 
 								<div
 									class="card card-default dropdown-notify dropdown-menu-right mb-0">
+									<h2>Thông báo</h2>
 									<div class="card-header card-header-border-bottom px-3">
-										<h2>Thông báo</h2>
 									</div>
 
 									<div class="card-body px-0 py-3">
@@ -142,32 +131,50 @@
 												role="tabpanel" aria-labelledby="home2-tab">
 												<ul class="list-unstyled" data-simplebar
 													style="height: 360px">
+													<c:if test="${watingOrderAmount!='0' }">
+														<li><div
+																class="media media-message media-notification">
 
-													<li><a href="#"
-														class="media media-message media-notification">
-
-															<div
-																class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
-																<i class="mdi mdi-account-multiple-check font-size-20"></i>
-															</div>
-
-															<div class="media-body d-flex justify-content-between">
-																<div class="message-contents">
-																	<h4 class="title">Hoá đơn chờ duyệt</h4>
-																	<p class="last-msg font-size-14">10.000.000VNĐ</p>
-
-																	<button type="button"
-																		class="my-1 btn btn-sm btn-success">Xem</button>
-
-																	<span
-																		class="font-size-12 font-weight-medium text-secondary d-block">
-																		<i class="mdi mdi-clock-outline"></i> 5 min ago...
-																	</span>
+																<div
+																	class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
+																	<i class="mdi mdi-account-multiple-check font-size-20"></i>
 																</div>
-															</div>
-													</a></li>
 
+																<div class="media-body d-flex justify-content-between">
+																	<div class="message-contents">
+																		<h4 class="title">Hoá đơn chờ duyệt</h4>
+																		<p class="last-msg font-size-14">${watingOrderAmount }
+																			hoá đơn</p>
+																		<a href="/Web/admin/danh-sach-hoa-don"
+																			class="my-1 btn btn-sm btn-success">Đến trang hoá
+																			đơn</a>
+																	</div>
+																</div>
+															</div></li>
 
+													</c:if>
+													<c:if test="${watingOrderAmountToday!= '0' }">
+														<li><div
+																class="media media-message media-notification">
+
+																<div
+																	class="d-flex rounded-circle align-items-center justify-content-center mr-3 media-icon iconbox-45 bg-primary text-white">
+																	<i class="mdi mdi-account-multiple-check font-size-20"></i>
+																</div>
+
+																<div class="media-body d-flex justify-content-between">
+																	<div class="message-contents">
+																		<h4 class="title">Hoá đơn mới</h4>
+																		<p class="last-msg font-size-14">${watingOrderAmountToday }
+																			hoá đơn</p>
+																		<a href="/Web/admin/danh-sach-hoa-don"
+																			class="my-1 btn btn-sm btn-warning">Đến trang hoá
+																			đơn</a>
+																	</div>
+																</div>
+															</div></li>
+
+													</c:if>
 												</ul>
 											</div>
 
@@ -179,34 +186,44 @@
 							<li class="right-sidebar-in right-sidebar-2-menu"><i
 								class="mdi mdi-settings mdi-spin"></i></li>
 							<!-- User Account -->
-							<li class="dropdown user-menu">
-								<button href="#" class="dropdown-toggle nav-link"
-									data-toggle="dropdown">
-									<img src="assets/img/user/user.png" class="user-image"
-										alt="User Image" /> <span class="d-none d-lg-inline-block">Abdus
-										Salam</span>
-								</button>
-								<ul class="dropdown-menu dropdown-menu-right">
+							<li class="dropdown user-menu"><a href="#"
+								class="dropdown-toggle nav-link" data-toggle="dropdown"> <c:choose>
+										<c:when
+											test="${sessionScope.UserSession.accInfor.name != null }">
+											<span class="d-none d-lg-inline-block">${sessionScope.UserSession.accInfor.name }</span>
+										</c:when>
+										<c:otherwise>
+											<span class="d-none d-lg-inline-block">${sessionScope.UserSession.accInfor.username }</span>
+										</c:otherwise>
+									</c:choose>
+							</a>
+								<ul class="dropdown-menu dropdown-menu-right"
+									style="overflow: hidden; text-overflow: ellipsis;">
 									<!-- User image -->
-									<li class="dropdown-header"><img
-										src="assets/img/user/user.png" class="img-circle"
-										alt="User Image" />
+									<li class="dropdown-header" x><img
+										style="width: 10%; height: 5vh"
+										src="<c:url value="${sessionScope.UserSession.accInfor.avatar }"/>"
+										class="img-circle" alt="x" />
 										<div class="d-inline-block">
-											Abdus Salam <small class="pt-1">iamabdus@gmail.com</small>
+											<c:choose>
+												<c:when
+													test="${sessionScope.UserSession.accInfor.name != null }">
+											${sessionScope.UserSession.accInfor.name }
+										</c:when>
+												<c:otherwise>
+										${sessionScope.UserSession.accInfor.username }
+										</c:otherwise>
+											</c:choose>
+											<small class="pt-1">${sessionScope.UserSession.accInfor.email }</small>
 										</div></li>
 
-									<li><a href="user-profile.html"> <i
+									<li><a href="/Web/trang-chu/trang-ca-nhan"> <i
 											class="mdi mdi-account"></i> Thông tin cá nhân
 									</a></li>
-									<li class="right-sidebar-in"><a href="javascript:0"> <i
-											class="mdi mdi-settings"></i> Cài đặt tài khoản
+									<li class="dropdown-footer"><a href="/Web/admin/log-out">
+											<i class="mdi mdi-logout"></i> Đăng xuất
 									</a></li>
-
-									<li class="dropdown-footer"><a href="index.html"> <i
-											class="mdi mdi-logout"></i> Đăng xuất
-									</a></li>
-								</ul>
-							</li>
+								</ul></li>
 						</ul>
 					</div>
 				</nav>
@@ -225,7 +242,7 @@
 						<div class="col-xl-3 col-sm-6" style="height: 20vh;">
 							<div class="card card-mini mb-4 badge-success">
 								<div class="card-body">
-									<h2 class="mb-1">71,503</h2>
+									<h2 class="mb-1">${currentSession }</h2>
 									<p>Người đang truy cập</p>
 
 								</div>
@@ -234,7 +251,7 @@
 						<div class="col-xl-3 col-sm-6">
 							<div class="card card-mini  mb-4 badge-danger">
 								<div class="card-body">
-									<h2 class="mb-1">9,503</h2>
+									<h2 class="mb-1">${totalSession }</h2>
 									<p>Người truy cập hôm nay</p>
 
 								</div>
@@ -243,7 +260,7 @@
 						<div class="col-xl-3 col-sm-6">
 							<div class="card card-mini mb-4 badge-warning">
 								<div class="card-body">
-									<h2 class="mb-1">71,503</h2>
+									<h2 class="mb-1">${totalOrderToday }</h2>
 									<p style="color: white;">Số hoá đơn hôm nay</p>
 
 								</div>
@@ -252,7 +269,7 @@
 						<div class="col-xl-3 col-sm-6">
 							<div class="card card-mini mb-4 badge-info">
 								<div class="card-body">
-									<h2 class="mb-1">9,503</h2>
+									<h2 class="mb-1">${totalEarnToday }</h2>
 									<p>Thu nhập hôm nay</p>
 
 								</div>
@@ -262,41 +279,38 @@
 
 
 					<div class="row">
-						<div class="col-xl-5">
+						<div class="col-xl-6">
 
 							<!-- Top Customers -->
-							<div class="card card-table-border-none">
+							<div class="card card-table-border-none" style="height: 560px;">
 								<div class="card-header justify-content-between ">
 									<h2>Khách hàng đầu</h2>
-									<div>
-										<button class="text-black-50 mr-2 font-size-20">
-											<i class="mdi mdi-cached"></i>
-										</button>
-
-									</div>
 								</div>
-								<div class="card-body pt-0" data-simplebar
-									style="height: 468px;">
+								<div class="card-body pt-0" data-simplebar>
 									<table class="table ">
 										<tbody>
-											<tr>
-												<td>
-													<div class="media">
-														<div class="media-image mr-3 rounded-circle">
-															<a href="profile.html"><img
-																class="rounded-circle w-45" src="assets/img/user/u1.jpg"
-																alt="customer image"></a>
-														</div>
-														<div class="media-body align-self-center">
-															<a href="profile.html"><h6
-																	class="mt-0 text-dark font-weight-medium">Full
-																	Name</h6></a> <small>Username</small>
-														</div>
-													</div>
-												</td>
-												<td>? Hoá đơn</td>
-												<td class="text-dark d-none d-md-block">Tổng chi</td>
-											</tr>
+											<c:if test="${lstTopAcc != null }">
+												<c:forEach var="item" items="${lstTopAcc }">
+													<tr>
+														<td>
+															<div class="media">
+																<!-- <div class="media-image mr-3 rounded-circle">
+																	<a href="#"><img class="rounded-circle w-45"
+																		src="#" alt="customer image"></a>
+																</div> -->
+																<div class="media-body align-self-center">
+																	<a href="#"><h6
+																			class="mt-0 text-dark font-weight-medium">${item.username }</h6></a>
+																	<small>${item.name }</small>
+																</div>
+															</div>
+														</td>
+														<td>${item.bills.size() }&nbsp;hoá&nbsp;đơn</td>
+														<td class="text-dark d-none d-md-block">${item.totalSpend }</td>
+													</tr>
+												</c:forEach>
+
+											</c:if>
 										</tbody>
 									</table>
 								</div>
@@ -304,43 +318,113 @@
 
 						</div>
 
-						<div class="col-xl-7">
+						<div class="col-xl-6">
 
 							<!-- Top Products -->
-							<div class="card card-default">
+							<div class="card card-default" style="height: 560px;">
 								<div class="card-header justify-content-between mb-4">
 									<h2>Sản phẩm hàng đầu</h2>
-									<div>
-										<button class="text-black-50 mr-2 font-size-20">
-											<i class="mdi mdi-cached"></i>
-										</button>
-									</div>
 
 								</div>
 								<div class="card-body py-0">
-									<div class="media d-flex mb-5">
-										<div class="media-image align-self-center mr-3 rounded">
-											<a href="#"><img src="assets/img/products/p1.jpg"
-												alt="customer image"></a>
-										</div>
-										<div class="media-body align-self-center">
-											<a href="#"><h6 class="mb-3 text-dark font-weight-medium">
-													Product Name</h6></a>
-											<p class="float-md-right">
-												<span class="text-dark mr-2">?</span>Đã bán
-											</p>
-											<p class="mb-0">
-												<del>$300</del>
-												<span class="text-dark ml-3">$250</span>
-											</p>
-										</div>
-									</div>
+									<c:if test="${not empty lstTopPro }">
+										<c:forEach var="item" items="${lstTopPro }">
+											<div class="media d-flex mb-5">
+												<div class="media-image align-self-center mr-3 rounded">
 
+													<c:choose>
+														<c:when test="${item.image == '' }">
+															<a href="#"><img style="height: 100px; width: 100px"
+																src="<c:url value="/resources/default.png"/>"
+																alt="customer image"></a>
+														</c:when>
+														<c:otherwise>
+															<a href="#"><img style="height: 100px; width: 100px"
+																src="<c:url value="${item.image }"/>"
+																alt="customer image"></a>
+														</c:otherwise>
+													</c:choose>
 
+												</div>
+												<div class="media-body align-self-center">
+													<a
+														href="/Web/admin/danh-sach-san-pham/chi-tiet-san-pham?idSanPham=${item.id }"><h6
+															class="mb-3 text-dark font-weight-medium">${item.name }</h6></a>
+													<p class="float-md-right">
+														<span class="text-dark mr-2">${item.soldQuantity }</span>&nbsp;hoá&nbsp;
+														đơn
+													</p>
+													<p class="mb-0">
+														<c:choose>
+															<c:when test="${item.promotionPrice == '0.00' }">
+																<span class="text-dark ml-3">${item.price }</span>
+															</c:when>
+															<c:otherwise>
+																<del>${items.price }</del>
+																<span class="text-dark ml-3">${item.promotionPrice }</span>
+															</c:otherwise>
+														</c:choose>
+
+													</p>
+												</div>
+											</div>
+
+										</c:forEach>
+									</c:if>
 								</div>
 							</div>
 
 						</div>
+
+						<form action="/Web/admin/thong-tin-chung" method="POST" id="updateForm"
+							class="col-lg-12">
+
+							<div>
+								<div class="card card-default">
+									<div class="card-header card-header-border-bottom">
+										<h2>Thông tin liên hệ</h2>
+									</div>
+									<div class="card-body">
+										<div class="form-group">
+											<label>Email</label>
+											<div class="input-group">
+												<input type="text" class="form-control" id="emailID"
+													value="${shopInfor.email }" name="email"
+													data-toggle="tooltip" data-placement="top"
+													title="Bạn nên nhập một chuỗi định dạng ....@gmail.com hoặc ....@(tên miền của bạn).com"
+													required="required">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label>Địa chỉ</label>
+											<div class="input-group">
+												<input type="text" class="form-control" id="addressID"
+													value="${shopInfor.address }" name="diaChi" required="required">
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Số điện thoại</label>
+											<div class="input-group">
+												<input type="text" class="form-control" id="phoneID"
+													value="${shopInfor.phone }" name="soDienThoai"
+													data-toggle="tooltip" data-placement="top"
+													title="Bạn nên nhập một chuỗi 10 số"
+													required="required">
+											</div>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							<footer class=" d-flex justify-content-center footer mt-auto">
+								<button type="button" id="addButton" onclick="completeSubmit()"
+									class="btn btn-primary mb-2 btn-pill m-3">Cập nhật</button>
+							</footer>
+							<!-- End Content -->
+						</form>
+
 					</div>
 
 				</div>
@@ -351,13 +435,56 @@
 		<!-- End Page Wrapper -->
 	</div>
 	<!-- End Wrapper -->
+	<!-- Modal Add Cart	Start-->
+	<div class="modal fade" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalCenterTitle" aria-hidden="true"
+		id="modalCart">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Thông báo</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" id="contentForCartAction">...</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal Add Cart	End-->
 
 
 
 	<!-- Javascript -->
-	<script src="<c:url value="/template/Admin/assets/plugins/jquery/jquery.min.js"/>"></script>
-	<script src="<c:url value="/template/Admin/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
-    <script src="<c:url value="/template/Admin/assets/js/sleek.js"/>"></script>
+	<script
+		src="<c:url value="/template/Admin/assets/plugins/jquery/jquery.min.js"/>"></script>
+	<script
+		src="<c:url value="/template/Admin/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"/>"></script>
+
+	<script
+		src="<c:url value="/template/Admin/assets/plugins/data-tables/jquery.datatables.min.js"/>"></script>
+	<script
+		src="<c:url value="/template/Admin/assets/plugins/data-tables/datatables.bootstrap4.min.js"/>"></script>
+
+	<script src="<c:url value="/template/Admin/assets/js/sleek.js"/>"></script>
+
+	<script type="text/javascript">
+		function completeSubmit() {
+			var email = $("#emailID").val();
+			var address = $("#addressID").val();
+			var phone = $("#phoneID").val();
+			var regexEmail = /^[0-9a-zA-z]{8,}.@(gmail|[a-zA-Z]+).com$/gi;
+			var regexPhone = /^0[0-9]{9}/gi;
+			if (!regexEmail(email) || !regexPhone(phone)){
+				$("#contentForCartAction").html("Lỗi đường truyền");
+				$("#modalCart").modal('show');
+				return;
+			}
+			$("#updateForm").submit();
+
+		}
+	</script>
 
 </body>
 </html>

@@ -17,7 +17,8 @@ import javaweb.services.inter.Color;
 @Service("Product")
 public class Product implements javaweb.services.inter.Product {
 
-	DBContext factory = new DBContext();
+	@Autowired
+	DBContext factory;
 	@Autowired
 	Color col;
 	@Autowired
@@ -70,7 +71,7 @@ public class Product implements javaweb.services.inter.Product {
 		javaweb.Entity.Product newPro = new javaweb.Entity.Product();
 		if (name != "")
 			newPro.setName(name);
-		BigDecimal validatePrice = new BigDecimal(0);
+		BigDecimal validatePrice = BigDecimal.ZERO;
 		if (originalPrice.compareTo(validatePrice) < 0 || price.compareTo(validatePrice) < 0
 				|| promotionPrice.compareTo(validatePrice) < 0)
 			return -1;
@@ -79,7 +80,7 @@ public class Product implements javaweb.services.inter.Product {
 		newPro.setOriginalPrice(originalPrice);
 		newPro.setPrice(price);
 		newPro.setPromotionPrice(promotionPrice);
-		if (image == "")
+		if (image == "/resources/" || image == "")
 			newPro.setImage("/resources/default.png");
 		else
 			newPro.setImage(image);
@@ -120,7 +121,7 @@ public class Product implements javaweb.services.inter.Product {
 			return false;
 		if (name != "")
 			updatedPro.setName(name);
-		BigDecimal validatePrice = new BigDecimal(0);
+		BigDecimal validatePrice = BigDecimal.ZERO;
 		if (originalPrice.compareTo(validatePrice) > 0 && price.compareTo(validatePrice) > 0
 				&& promotionPrice.compareTo(validatePrice) >= 0 && originalPrice.compareTo(price) < 0
 				&& price.compareTo(promotionPrice) > 0) {
@@ -129,7 +130,8 @@ public class Product implements javaweb.services.inter.Product {
 			updatedPro.setPromotionPrice(promotionPrice);
 		} else
 			return false;
-		updatedPro.setImage(image);
+		if (!image.equalsIgnoreCase("/resources/nochange"))
+			updatedPro.setImage(image);
 		updatedPro.setDescription(description);
 		updatedPro.setRam(ram);
 		updatedPro.setRom(rom);
@@ -178,6 +180,19 @@ public class Product implements javaweb.services.inter.Product {
 		ss.flush();
 		ss.close();
 		return true;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<javaweb.Entity.Product> getAllFetch(List<String> lstField) {
+		Session ss = factory.getSession();
+		ss.beginTransaction();
+		Criteria query = ss.createCriteria(javaweb.Entity.Product.class);
+		lstField.forEach((item) -> query.setFetchMode(item, FetchMode.JOIN));
+		query.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+		List<javaweb.Entity.Product> rs = query.list();
+		ss.close();
+		return rs;
 	}
 
 }

@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -27,6 +28,7 @@ public class Trademark implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
+	private int amount;
 	private Set<Product> products = new HashSet<Product>(0);
 
 	public Trademark() {
@@ -70,6 +72,19 @@ public class Trademark implements java.io.Serializable {
 
 	public void setProducts(Set<Product> products) {
 		this.products = products;
+	}
+	
+	@Transient
+	public int getAmount() {
+		return amount;
+	}
+
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
+	
+	public void loadAmount() {
+		this.amount = this.getProducts().size();
 	}
 
 }

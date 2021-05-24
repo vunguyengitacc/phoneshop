@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("Ward")
@@ -17,8 +18,6 @@ public class Ward implements javaweb.services.inter.Ward {
 		ss.beginTransaction();
 		List rs = ss.createCriteria(javaweb.Entity.Ward.class).add(Restrictions.eq("district.id", districtId)).list();
 		ss.close();
-		if (rs.size() == 0)
-			return null;
 		return rs;
 	}
 
