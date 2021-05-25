@@ -5,14 +5,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.hibernate.Session;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("GeneralInformation")
 public class GeneralInformation implements javaweb.services.inter.GeneralInformation {
 
-	@Autowired
-	DBContext factory;
+	DBContext factory = new DBContext();
 
 	@SuppressWarnings("unchecked")
 	@Override

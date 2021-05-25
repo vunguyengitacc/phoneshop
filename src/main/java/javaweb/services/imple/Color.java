@@ -2,13 +2,11 @@ package javaweb.services.imple;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("Color")
 public class Color implements javaweb.services.inter.Color {
-	@Autowired
-	DBContext factory;
+	DBContext factory = new DBContext();
 
 	@Override
 	public javaweb.Entity.Color getByID(int id) {

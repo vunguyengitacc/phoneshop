@@ -24,8 +24,7 @@ public class ProductHasColorHasBill implements javaweb.services.inter.ProductHas
 	Bill bill;
 	@Autowired
 	javaweb.services.inter.ProductHasColor pro_color;
-	@Autowired
-	DBContext factory;
+	DBContext factory = new DBContext();
 
 	@Override
 	public boolean postNew(int colorId, int productId, int billId, int amount) {

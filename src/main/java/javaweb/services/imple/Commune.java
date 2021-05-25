@@ -4,14 +4,12 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("Commune")
 public class Commune implements javaweb.services.inter.Commune {
 
-	@Autowired
-	DBContext factory;
+	DBContext factory = new DBContext();
 
 	@Override
 	public javaweb.Entity.Commune getById(int id) {

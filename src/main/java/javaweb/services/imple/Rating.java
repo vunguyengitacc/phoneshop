@@ -11,8 +11,7 @@ import javaweb.Entity.RatingId;
 
 @Service("Rating")
 public class Rating implements javaweb.services.inter.Rating {
-	@Autowired
-	DBContext factory;
+	DBContext factory = new DBContext();
 
 	@Autowired
 	javaweb.services.imple.Product pro;

@@ -10,8 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service("Comment")
 public class Comment implements javaweb.services.inter.Comment {
-	@Autowired
-	DBContext factory;
+	DBContext factory = new DBContext();
 
 	@Autowired
 	javaweb.services.imple.Product pro;

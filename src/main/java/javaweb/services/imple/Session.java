@@ -3,14 +3,12 @@ package javaweb.services.imple;
 import java.util.List;
 
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("Session")
 public class Session implements javaweb.services.inter.Session {
 
-	@Autowired
-	DBContext factory;
+	DBContext factory = new DBContext();
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override

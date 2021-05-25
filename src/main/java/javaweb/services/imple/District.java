@@ -4,14 +4,12 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("District")
 public class District implements javaweb.services.inter.District {
 
-	@Autowired
-	DBContext factory;
+	DBContext factory = new DBContext();
 
 	@SuppressWarnings("unchecked")
 	@Override

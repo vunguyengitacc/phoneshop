@@ -387,7 +387,7 @@
 							<div>
 								<div class="form-group">
 									<label for="username">Mật khẩu cũ</label> <input
-										type="password" class="form-control" id="oldPass"
+										type="password" class="form-control" id="oldPass" name="matKhauCu"
 										aria-describedby="usernameHelp"> <label for="username">Mật
 										khẩu mới</label> <input type="password" class="form-control"
 										id="newPass" aria-describedby="usernameHelp"> <label
@@ -596,7 +596,7 @@
 				return;
 			}
 			$.ajax({
-				url: "/Web/trang-chu/api/tai-khoan/doi-mat-khau?matKhauMoi="+y.val(),
+				url: "/Web/trang-chu/api/tai-khoan/doi-mat-khau?matKhauMoi="+y.val()+"&matKhauCu="+x.val(),
 				type: 'PUT',
 				success: (response)=>{
 					var objJson = JSON.parse(response);
@@ -618,6 +618,11 @@
 					else if (objJson.status == "4") {
 						$("#contentForCartAction").html("Tài khoản của bạn đã bị khoá! Thao tác thất bại");
 						$("#exampleModalCenter").modal('show');
+						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1000);
+					}
+					else if(objJson.status == 5){
+						$("#contentForCartAction").html("Sai mật khẩu");
+						$("#modalCart").modal('show');
 						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1000);
 					}
 				},
