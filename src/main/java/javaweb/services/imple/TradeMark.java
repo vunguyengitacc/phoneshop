@@ -6,15 +6,14 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javaweb.Entity.Trademark;
 
 @Service("TradeMark")
 public class TradeMark implements javaweb.services.inter.TradeMark {
-	@Autowired
-	DBContext factory;
+	
+	DBContext factory = new DBContext();
 
 	@Override
 	public List<Trademark> getAll() {
@@ -42,7 +41,7 @@ public class TradeMark implements javaweb.services.inter.TradeMark {
 		Trademark temp = (Trademark) ss.createCriteria(Trademark.class).add(Restrictions.eq("name", name))
 				.uniqueResult();
 		if (temp != null)
-			return temp;
+			return null;
 		temp = new Trademark();
 		temp.setName(name);
 		ss.save(temp);

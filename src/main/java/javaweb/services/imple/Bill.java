@@ -26,8 +26,7 @@ public class Bill implements javaweb.services.inter.Bill {
 	javaweb.services.inter.Commune commnue;
 	@Autowired
 	ProductHasColorHasBill detail;
-	@Autowired
-	DBContext factory;
+	DBContext factory = new DBContext();
 
 	@Override
 	public int postBill(Account acc, int comm, BigDecimal totalValue, String promo) {

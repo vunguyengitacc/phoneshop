@@ -8,14 +8,12 @@ import org.hibernate.Criteria;
 import org.hibernate.FetchMode;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service("Promotion")
 public class Promotion implements javaweb.services.inter.Promotion {
 
-	@Autowired
-	DBContext factory;
+	DBContext factory = new DBContext();
 
 	@Override
 	public javaweb.Entity.Promotion getByID(String id) {

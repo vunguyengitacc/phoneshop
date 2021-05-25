@@ -188,7 +188,7 @@ public class RestHomeController {
 
 	@PutMapping("/tai-khoan/doi-mat-khau")
 	@ResponseBody
-	public String updateAccountPassword(Model model, HttpSession session, @RequestParam("matKhauMoi") String newPass) {
+	public String updateAccountPassword(Model model, HttpSession session, @RequestParam("matKhauMoi") String newPass, @RequestParam("matKhauCu") String oldPass) {
 		UserSession userSs = (UserSession) session.getAttribute("UserSession");
 		if (userSs == null)
 			return "{ \"status\": 3}";// chua dang nhap
@@ -198,6 +198,8 @@ public class RestHomeController {
 		}
 		if (newPass == "")
 			return "{ \"status\": 2}";// cap nhat khong thanh cong
+		if(!userSs.getAccInfor().getPassword().equals(oldPass))
+			return "{ \"status\": 5}";// Sai mat khau
 		if (acc.putNewPass(userSs.getAccInfor().getUsername(), newPass) == true) {
 			session.invalidate();// cap nhat thanh cong can dang nhap lai
 			return "{ \"status\": 1}";// cap nhat thanh cong

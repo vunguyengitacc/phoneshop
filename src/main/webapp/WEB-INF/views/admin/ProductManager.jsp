@@ -446,7 +446,7 @@
 										<div class="form-group">
 											<label>RAM <span style="color: red">*</span></label>
 											<div class="input-group">
-												<input type="text" class="form-control"
+												<input type="number" class="form-control" min=0
 													value="${productDetail.ram }" name="ram"
 													data-toggle="tooltip" data-placement="top"
 													title="Bạn nên nhập một số nguyên dương">
@@ -456,7 +456,7 @@
 										<div class="form-group">
 											<label>ROM <span style="color: red">*</span></label>
 											<div class="input-group">
-												<input type="text" class="form-control"
+												<input type="number" class="form-control" min=0
 													value="${productDetail.rom }" name="rom"
 													data-toggle="tooltip" data-placement="top"
 													title="Bạn nên nhập một số nguyên dương">
