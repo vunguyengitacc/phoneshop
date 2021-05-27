@@ -543,7 +543,7 @@
 			var b = $("#email");
 			var c = $("#phoneNumber");
 			var d = $("#gender");
-			var regexForEmail = /^[a-zA-Z0-9.]+@(gmail|[a-zA-z]+).com$/g;
+			var regexForEmail = /^[.a-zA-Z0-9]+@(gmail|[a-zA-z]+).com$/g;
 			var regexForPhone = /^(0|\+84)[0-9]{9}$/g;
 			if(!regexForEmail.test(b.val())||!regexForPhone.test(c.val())){
 				$("#contentForCartAction").html("Vui lòng nhập đúng định dạng");
@@ -558,7 +558,6 @@
 					if(objJson.status == 1){
 						$("#contentForCartAction").html("Cập nhật thành công!");
 						$("#modalCart").modal('show');
-						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1500);
 					} else if(objJson.status == 2){
 						$("#contentForCartAction").html("Cập nhật thất bại! Vui lòng kiểm tra lại định dạng input");
 						$("#modalCart").modal('show');
@@ -571,10 +570,13 @@
 						$("#contentForCartAction").html("Tài khoản của bạn đã bị khoá! Thao tác thất bại");
 						$("#exampleModalCenter").modal('show');
 						setTimeout(()=>$("#bodyHTML").click(reloadPage()),1500);
+					} else if (objJson.status == "5") {
+						$("#contentForCartAction").html("Vui lòng thử một địa chỉ mail khác");
+						$("#exampleModalCenter").modal('show');
 					}
 				},
 				error: (error)=>{
-					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#contentForCartAction").html("Lỗi đường truyền");
 					$("#modalCart").modal('show');
 				}
 			})	
@@ -627,7 +629,7 @@
 					}
 				},
 				error: (error)=>{
-					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#contentForCartAction").html("Lỗi đường truyền");
 					$("#modalCart").modal('show');
 				}
 			})

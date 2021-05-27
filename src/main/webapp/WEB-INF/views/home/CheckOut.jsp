@@ -392,7 +392,7 @@
 					
 				},
 				error: (error)=>{
-					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#contentForCartAction").html("Lỗi đường truyền");
 					$("#modalCart").modal('show');
 				}
 			})
@@ -430,7 +430,7 @@
 					
 				},
 				error: (error)=>{
-					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#contentForCartAction").html("Lỗi đường truyền");
 					$("#modalCart").modal('show');
 				}
 			})

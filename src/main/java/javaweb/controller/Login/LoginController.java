@@ -51,10 +51,10 @@ public class LoginController {
 			session.setAttribute("UserSession", new UserSession(accLogging));
 			return "redirect:/admin/quan-li-chung";
 		} else if(accLogging!=null && accLogging.getStatus()==0){
-			request.setAttribute("message", "Tài khoản của bạn đã bị khoá!");
+			model.addAttribute("message", "Tài khoản của bạn đã bị khoá!");
 			return "redirect:/login";
 		} else{
-			request.setAttribute("message", "Tài khoản hoặc mật khẩu không hợp lệ!");
+			model.addAttribute("message", "Tài khoản hoặc mật khẩu không hợp lệ!");
 			return "redirect:/login";
 		}
 	}
