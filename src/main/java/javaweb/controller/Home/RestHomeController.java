@@ -76,9 +76,11 @@ public class RestHomeController {
 		if (maxAmount < amount || maxAmount < newAmount)
 			return "{ \"status \" : 2 }";// status 2: không đủ hàng
 		if (newAmount == 0)// do chỉ chấp nhận 1 trong 2 giá trị amount hoặc newAmount và ưu tiên amount
+		{
 			item.setAmount(amount);
-		else
+		} else {
 			item.setAmount(newAmount);
+		}
 		BigDecimal amountDecimal = new BigDecimal(item.getAmount());
 		if (item.getPro().getPromotionPrice().compareTo(BigDecimal.ZERO) == 0) {
 			String value = item.getPro().getPrice().multiply(amountDecimal).toString();
@@ -174,8 +176,8 @@ public class RestHomeController {
 			return "{ \"status\": 4}";// tài khoản bị admin khoá trong lúc đăng nhập
 		}
 		javaweb.Entity.Account testEmail = acc.findByEmail(email);
-		if (testEmail != null && testEmail.getUsername().equals(userSs.getAccInfor().getUsername()))
-			return "{ \"status\": 2}";// cập nhật thất bại
+		if (testEmail != null && !testEmail.getUsername().equals(userSs.getAccInfor().getUsername()))
+			return "{ \"status\": 5}";// cập nhật thất bại
 		if (name == "" && email == "" && phone == "")
 			return "{ \"status\": 2}";// cập nhật thất bại
 		if (acc.putAccountInfor(userSs.getAccInfor().getUsername(), name, email, phone, gender) == true) {
@@ -188,7 +190,8 @@ public class RestHomeController {
 
 	@PutMapping("/tai-khoan/doi-mat-khau")
 	@ResponseBody
-	public String updateAccountPassword(Model model, HttpSession session, @RequestParam("matKhauMoi") String newPass, @RequestParam("matKhauCu") String oldPass) {
+	public String updateAccountPassword(Model model, HttpSession session, @RequestParam("matKhauMoi") String newPass,
+			@RequestParam("matKhauCu") String oldPass) {
 		UserSession userSs = (UserSession) session.getAttribute("UserSession");
 		if (userSs == null)
 			return "{ \"status\": 3}";// chua dang nhap
@@ -198,7 +201,7 @@ public class RestHomeController {
 		}
 		if (newPass == "")
 			return "{ \"status\": 2}";// cap nhat khong thanh cong
-		if(!userSs.getAccInfor().getPassword().equals(oldPass))
+		if (!userSs.getAccInfor().getPassword().equals(oldPass))
 			return "{ \"status\": 5}";// Sai mat khau
 		if (acc.putNewPass(userSs.getAccInfor().getUsername(), newPass) == true) {
 			session.invalidate();// cap nhat thanh cong can dang nhap lai

@@ -92,8 +92,6 @@ public class AdminController {
 
 	@GetMapping("/log-out")
 	public String logoutHandler(HttpSession session) {
-		if (checkAdminSession(session) == false)
-			return "redirect:/trang-chu/";
 		session.setAttribute("UserSession", null);
 		session.setAttribute("cart", null);
 		return "redirect:/trang-chu/";

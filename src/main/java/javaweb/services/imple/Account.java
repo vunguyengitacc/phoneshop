@@ -137,7 +137,7 @@ public class Account implements javaweb.services.inter.Account {
 			rs.setStatus(0);
 		else
 			rs.setStatus(1);
-		ss.save(rs);
+		ss.saveOrUpdate(rs);
 		ss.getTransaction().commit();
 		ss.close();
 		return true;

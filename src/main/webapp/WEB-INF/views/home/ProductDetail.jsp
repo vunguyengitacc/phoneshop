@@ -627,7 +627,7 @@
 							}
 						},
 						error : function(error) {
-							$("#contentForCartAction").html("Đã xảy ra lỗi");
+							$("#contentForCartAction").html("Lỗi đường truyền");
 							$("#modalCart").modal('show');
 							console.log(error);
 						}
@@ -682,7 +682,7 @@
 					}
 				},
 				error : function(error) {
-					$("#contentForCartAction").html("Đã xảy ra lỗi");
+					$("#contentForCartAction").html("Lỗi đường truyền");
 					$("#modalCart").modal('show');
 				}
 			})

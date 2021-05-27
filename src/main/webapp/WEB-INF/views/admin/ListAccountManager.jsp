@@ -269,8 +269,11 @@
 															<c:when test="${item.gender == '1' }">
 																<td>Nam</td>
 															</c:when>
-															<c:otherwise>
+															<c:when test="${item.gender == '2' }">
 																<td>Nữ</td>
+															</c:when>
+															<c:otherwise>
+																<td>Khác</td>
 															</c:otherwise>
 														</c:choose>
 														<td>${item.bills.size() }</td>
